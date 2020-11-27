@@ -1,11 +1,16 @@
 <template>
-  <Home />
+<v-main>
+<router-view name="Home" />
+<router-view name="AppBar" />
+<router-view name="Veiculos" />
+<router-view name="Footer"/>
+<router-view />
+
+</v-main>
 </template>
 
 <script>
-import Home from "./components/Home"
 export default {
-  components: { Home }
 }
 </script>
 

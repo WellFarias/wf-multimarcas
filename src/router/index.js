@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../components/TelaHome/Home.vue'
+import AppBar from '../components/AppBar'
+import Veiculos from '../components/TelaVeiculos/Veiculos'
+import Footer from '../components/Footer'
+import SignUp from '../components/TelaLogin/SignUp'
+
 
 Vue.use(VueRouter)
 
@@ -8,15 +13,24 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    components: {
+      Home: Home,
+      AppBar: AppBar,
+      Footer: Footer
+    }
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/veiculos',
+    name: 'Veiculos',
+    components: {
+     AppBar: AppBar,
+     Veiculos: Veiculos, 
+     Footer: Footer
+    },
+  },
+  {
+    path: '/login',
+    component: SignUp
   }
 ]
 

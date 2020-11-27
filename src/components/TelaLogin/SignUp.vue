@@ -1,11 +1,10 @@
 <template>
-  <AppBar/>
+  <h1>Login</h1>
 </template>
 
 <script>
-import AppBar from "./AppBar"
 export default {
-    components: { AppBar }
+
 }
 </script>
 
