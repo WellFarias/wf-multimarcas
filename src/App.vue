@@ -3,6 +3,7 @@
     <router-view name="Home" />
     <router-view name="AppBar" />
     <router-view name="Veiculos" />
+    <router-view name="Cadastro" />
     <router-view name="Footer" />
     <router-view />
   </v-main>

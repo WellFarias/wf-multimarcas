@@ -1,7 +1,12 @@
 <template>
   <v-container>
     <v-row align="center" justify="center">
-      <v-text-field v-model="search" append-icon="mdi-magnify" label="Pesquisar" single-line hide-details></v-text-field>
+      <v-text-field
+        append-icon="mdi-magnify"
+        label="Pesquisar"
+        single-line
+        hide-details
+      ></v-text-field>
     </v-row>
     <Cards />
   </v-container>

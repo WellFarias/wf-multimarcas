@@ -5,7 +5,7 @@ import AppBar from '../components/AppBar'
 import Veiculos from '../components/TelaVeiculos/Veiculos'
 import Footer from '../components/Footer'
 import SignUp from '../components/TelaLogin/SignUp'
-
+import Cadastro from '../components/TelaCadastro/Cadastro'
 
 Vue.use(VueRouter)
 
@@ -31,6 +31,14 @@ const routes = [
   {
     path: '/login',
     component: SignUp
+  },
+  {
+    path: '/cadastro',
+    name: 'Cadastro',
+    components: {
+      AppBar: AppBar,
+      Cadastro: Cadastro
+    }
   }
 ]
 
