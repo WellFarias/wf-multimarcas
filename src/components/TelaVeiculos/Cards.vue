@@ -2,12 +2,24 @@
   <v-container>
     <v-hover>
       <template v-slot:default="{ hover }">
-        <v-card style="background-color: #cbcbcb" elevation="1" class="mx-auto" max-width="270">
-          <v-img src="https://www.giacomelliveiculos.com.br/carros/f9eba97a7e0af4ec5beb10a3d448ed7e-thumbjpg-chevrolet-celta-8371359-800-600-70.jpg" height="200px"></v-img>
+        <v-card
+          :v-for="(this.carro, i) in carros"
+          :key="i"
+          style="background-color: #cbcbcb"
+          elevation="1"
+          class="mx-auto"
+          max-width="270"
+        >
+          <v-img
+            src="https://www.giacomelliveiculos.com.br/carros/f9eba97a7e0af4ec5beb10a3d448ed7e-thumbjpg-chevrolet-celta-8371359-800-600-70.jpg"
+            height="200px"
+          ></v-img>
 
           <v-card-title> Celta </v-card-title>
 
           <v-card-subtitle>
+            <strong> R$ 16.000 </strong>
+            <br />
             1.0 MPFI LIFE 8V FLEX 2P
             <br />
             MANUAL
@@ -18,19 +30,51 @@
           </v-card-subtitle>
           <v-fade-transition>
             <v-overlay v-if="hover" absolute color="#000000">
-              <b-button v-b-modal.modal-scrollable elevation="10" style="background-color: #d94b4b">Saiba mais</b-button>
+              <b-button
+                v-b-modal.modal-scrollable
+                elevation="10"
+                style="background-color: #d94b4b"
+                >Saiba mais</b-button
+              >
             </v-overlay>
           </v-fade-transition>
         </v-card>
       </template>
     </v-hover>
 
-    <b-modal id="modal-scrollable" ok-only ok-variant="danger" scrollable title="Celta ">
-      <b-carousel id="carousel-fade" style="text-shadow: 0px 0px 2px #000" fade indicators img-width="1024" img-height="480">
-        <b-carousel-slide img-src="https://www.giacomelliveiculos.com.br/carros/f9eba97a7e0af4ec5beb10a3d448ed7e-thumbjpg-chevrolet-celta-8371359-800-600-70.jpg"></b-carousel-slide>
-        <b-carousel-slide img-src="https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg"></b-carousel-slide>
-        <b-carousel-slide img-src="https://www.giacomelliveiculos.com.br/carros/556959e50b7088c510b60e065990225e-thumbjpg-chevrolet-celta-8371359-1000-750-70.jpg"></b-carousel-slide>
+    <b-modal
+      id="modal-scrollable"
+      ok-only
+      ok-variant="danger"
+      scrollable
+      title="Celta "
+    >
+      <b-carousel
+        id="carousel-fade"
+        style="text-shadow: 0px 0px 2px #000"
+        fade
+        indicators
+        img-width="1024"
+        img-height="480"
+      >
+        <b-carousel-slide
+          img-src="https://www.giacomelliveiculos.com.br/carros/f9eba97a7e0af4ec5beb10a3d448ed7e-thumbjpg-chevrolet-celta-8371359-800-600-70.jpg"
+        ></b-carousel-slide>
+        <b-carousel-slide
+          img-src="https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg"
+        ></b-carousel-slide>
+        <b-carousel-slide
+          img-src="https://www.giacomelliveiculos.com.br/carros/556959e50b7088c510b60e065990225e-thumbjpg-chevrolet-celta-8371359-1000-750-70.jpg"
+        ></b-carousel-slide>
       </b-carousel>
+      <v-row style="margin-top: 10px">
+        <v-col cols="2"> </v-col>
+        <v-col cols="8">
+          <h1 class="center">R$ 16.000</h1>
+        </v-col>
+        <v-col cols="2"> </v-col>
+      </v-row>
+
       <v-row>
         <v-col>
           <h6 class="my-1 center">Ano</h6>
@@ -73,14 +117,22 @@
       </v-row>
       <v-divider inset></v-divider>
       <v-row>
-        <h4 class="center">Entre em contato com a gente ou vá até a loja, para fazer o finânciamento!</h4>
+        <h4 class="center">
+          Entre em contato com a gente ou vá até a loja, para fazer o
+          finânciamento!
+        </h4>
       </v-row>
       <v-divider inset></v-divider>
       <v-row>
-        <p class="my-1" style="margin: 5%">Endereço: Rua Raimundo Carneiro 123</p>
+        <p class="my-1" style="margin: 5%">
+          Endereço: Rua Raimundo Carneiro 123
+        </p>
       </v-row>
       <v-row>
-        <p class="my-1" style="margin: 5%">Funcionamento: Segunda à Sexta | 9h00 às 18h00 e aos Sábados | 9h00 às 15h00</p>
+        <p class="my-1" style="margin: 5%">
+          Funcionamento: Segunda à Sexta | 9h00 às 18h00 e aos Sábados | 9h00 às
+          15h00
+        </p>
       </v-row>
       <v-divider inset></v-divider>
       <v-row>
@@ -97,10 +149,18 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data: () => ({
     overlay: false,
   }),
+
+  computed: {
+    mapGetters() {
+      this.carro;
+    },
+  },
 };
 </script>
 
