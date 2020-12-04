@@ -13,14 +13,14 @@
         <v-card-text>
           <v-text-field
             append-icon="mdi-account"
-            label="Usuario"
             outlined
             autocomplete="off"
             type="email"
+            placeholder="Usuário"
           />
           <v-text-field
             append-icon="mdi-lock"
-            label="Senha"
+            placeholder="Senha"
             type="password"
             outlined
           />
@@ -39,5 +39,4 @@
 export default {};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

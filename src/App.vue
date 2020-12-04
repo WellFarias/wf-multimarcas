@@ -10,7 +10,20 @@
 </template>
 
 <script>
-export default {};
+export default {
+  /*
+  created() {
+    this.$http
+      .post("carros.json", {
+        nome: "Meriva",
+        marca: "Chevrolet",
+        cor: "preto",
+        ano: "1997",
+      })
+      .then((res) => console.log(res));
+  },
+  */
+};
 </script>
 
 <style>

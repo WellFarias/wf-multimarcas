@@ -11,7 +11,7 @@
               margin-top: 50px;
             "
           >
-            Cadastro de veículos
+            Cadastro de veículo
           </h1>
           <br />
           <v-col cols="12">
@@ -171,6 +171,10 @@
             ></v-text-field>
 
             <v-file-input
+              accept="image/*"
+              type="file"
+              @change="previewImage"
+              v-model="carro.foto"
               placeholder="Anexe a foto"
               prepend-icon="mdi-camera"
               outlined
@@ -194,6 +198,13 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
+  data() {
+    return {
+      imageData: null,
+      uploadValue: 0,
+    };
+  },
+
   computed: {
     ...mapGetters({
       carros: "carros",
@@ -212,12 +223,46 @@ export default {
       salvarCarro: "salvarCarros",
     }),
 
-    salvarCarro() {
-      this.$store.commit("addCarros", this.carro);
-      console.log(this.carros);
+  
+
+    salvarCarro({ commit }) {
+      console.log(this.$firebase)
+      const storageRef = this.$firebase
+        .storage()
+        .ref(`${this.imageData.name}`)
+        .put(this.imageData);
+      storageRef.on(
+        "state_changed",
+        (snapshot) => {
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.log(error.mesage);
+        },
+        () => {
+          this.uploadValue = 100;
+          storageRef.snapshot.ref.getDownloadURL().then((url) => {
+            this.carro.foto = url;
+            this.$http.post("carros.json", this.carro).then((res) => {
+              commit("addCarro", res.data);
+            });
+          });
+        }
+      );
+    },
+
+    previewImage(file) {
+      console.log("evento da imagem", file.name);
+      this.imageData = file;
     },
   },
+
+  mounted(){
+    console.log(this.$firebase)
+  }
 };
+
 </script>
 
 <style></style>
