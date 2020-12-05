@@ -4,6 +4,7 @@
     <router-view name="AppBar" />
     <router-view name="Veiculos" />
     <router-view name="Cadastro" />
+    <router-view name="Alterar" />
     <router-view name="Footer" />
     <router-view />
   </v-main>

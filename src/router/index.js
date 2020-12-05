@@ -6,6 +6,7 @@ import Veiculos from '../components/TelaVeiculos/Veiculos'
 import Footer from '../components/Footer'
 import SignUp from '../components/TelaLogin/SignUp'
 import Cadastro from '../components/TelaCadastro/Cadastro'
+import Alterar from '../components/TelaVeiculos/Alterar'
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,14 @@ const routes = [
     components: {
       AppBar: AppBar,
       Cadastro: Cadastro
+    }
+  },
+  {
+    path: '/alterar',
+    name: 'Alterar',
+    components: {
+      AppBar: AppBar,
+      Alterar: Alterar
     }
   }
 ]

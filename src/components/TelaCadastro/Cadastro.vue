@@ -170,17 +170,6 @@
               outlined
               prefix="R$"
             ></v-text-field>
-
-            <v-file-input
-              accept="image/*"
-              type="file"
-              @change="previewImage"
-              v-model="carro.fotoPrincipal"
-              placeholder="Anexe a foto Principal"
-              append-icon="mdi-camera"
-              outlined
-            ></v-file-input>
-
             <v-row>
               <v-col cols="8">
                 <v-file-input
@@ -210,6 +199,7 @@
       </v-row>
     </v-container>
   </div>
+
 </template>
 
 <script>
@@ -223,7 +213,8 @@ export default {
       uploadValue: 0,
       picture: null,
       key: null,
-      loading: false
+      loading: false,
+      dinheiro: 0
     };
   },
 
