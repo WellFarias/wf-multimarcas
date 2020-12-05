@@ -164,6 +164,7 @@
 
             <v-text-field
               v-model="carro.preco"
+              :value="reais"
               placeholder="Digite o preço do carro"
               hint="Ex: 16.000, 20.000, 50.000 e etcs"
               outlined
@@ -174,11 +175,28 @@
               accept="image/*"
               type="file"
               @change="previewImage"
-              v-model="carro.foto"
-              placeholder="Anexe a foto"
-              prepend-icon="mdi-camera"
+              v-model="carro.fotoPrincipal"
+              placeholder="Anexe a foto Principal"
+              append-icon="mdi-camera"
               outlined
             ></v-file-input>
+
+            <v-row>
+              <v-col cols="8">
+                <v-file-input
+                    v-model="carro.fotos"
+                    multiple
+                    @change="previewImages"
+                    append-icon="mdi-camera"
+                    truncate-length="8"
+                ></v-file-input>
+              </v-col>
+              <v-col cols="2">
+                <v-btn @click="uploadImages" :loading="loading"  :dark="!loading"> Salvar Imagens</v-btn>
+              </v-col>
+
+            </v-row>
+
 
             <v-card-actions>
               <v-row align="center" justify="center" class="ml-1 mr-1">
@@ -200,8 +218,12 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
+      images : [],
       imageData: null,
       uploadValue: 0,
+      picture: null,
+      key: null,
+      loading: false
     };
   },
 
@@ -210,6 +232,10 @@ export default {
       carros: "carros",
       carro: "carro",
     }),
+
+    reais(){
+      return this.carro.preco?.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+    }
   },
 
   methods: {
@@ -223,39 +249,63 @@ export default {
       salvarCarro: "salvarCarros",
     }),
 
-  
+    salvarCarro() {
+      this.onUpload()
 
-    salvarCarro({ commit }) {
-      console.log(this.$firebase)
-      const storageRef = this.$firebase
-        .storage()
-        .ref(`${this.imageData.name}`)
-        .put(this.imageData);
-      storageRef.on(
-        "state_changed",
-        (snapshot) => {
-          this.uploadValue =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        },
-        (error) => {
-          console.log(error.mesage);
-        },
-        () => {
-          this.uploadValue = 100;
-          storageRef.snapshot.ref.getDownloadURL().then((url) => {
-            this.carro.foto = url;
-            this.$http.post("carros.json", this.carro).then((res) => {
-              commit("addCarro", res.data);
-            });
-          });
-        }
-      );
+
     },
 
     previewImage(file) {
-      console.log("evento da imagem", file.name);
-      this.imageData = file;
+        this.uploadValue=0;
+        this.picture=null;
+        this.imageData = file
     },
+
+    previewImages(files){
+      this.images = files
+    },
+
+    uploadImages(){
+      this.loading = true
+      console.log("images", this.images)
+      for (let i = 0; i < this.images.length; i++){
+        let file = this.images[i]
+        console.log("file", file)
+        const storageRef= this.$firebase.storage().ref(file.name).put(file);
+        storageRef.on(`state_changed`,()=>{
+            }, error=>{console.log(error.message)},
+            ()=>{
+              storageRef.snapshot.ref.getDownloadURL().then((url)=>{
+                this.carro.fotos.push(url)
+              });
+            }
+        );
+      }
+
+      setTimeout(() => {
+        this.loading = false
+      }, 2000);
+
+    },
+
+    onUpload(){
+      this.picture=null;
+      const storageRef= this.$firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
+      storageRef.on(`state_changed`,snapshot=>{
+            this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+          }, error=>{console.log(error.message)},
+          ()=>{this.uploadValue=100;
+            storageRef.snapshot.ref.getDownloadURL().then((url)=>{
+              this.carro.fotoPrincipal = url
+              this.$firebase.database().ref("/carros").push(this.carro).then((savedItem) =>{
+                this.addCarros(savedItem)
+              })
+            });
+          }
+      );
+    }
+
+
   },
 
   mounted(){

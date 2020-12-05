@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     carros: [],
-    carro: {}
+    carro: {},
+    user: {}
   },
   getters: {
     carros(state){
@@ -15,6 +16,10 @@ export default new Vuex.Store({
 
     carro(state){
       return state.carro;
+    },
+
+    user(state){
+      return state.user
     }
   },
 
@@ -30,6 +35,10 @@ export default new Vuex.Store({
 
     addCarros(state, payload){
       state.carros.push(payload)
+    },
+
+    setUser(state, payload){
+      state.user = payload
     }
   },
   actions: {

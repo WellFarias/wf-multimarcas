@@ -12,18 +12,18 @@ import firebase from 'firebase';
 Vue.config.productionTip = false
 
 var config = {
-  apiKey: "AIzaSyBU775GcBpUBupItEIBSK8GA0LgMpw0YP8",
-  authDomain: "wf-multimarcas.firebaseapp.com",
-  databaseURL: "https://wf-multimarcas-default-rtdb.firebaseio.com",
-  projectId: "wf-multimarcas",
-  storageBucket: "wf-multimarcas.appspot.com",
-  messagingSenderId: "741904275582",
-  appId: "1:741904275582:web:73c2cc941fe78da30c602f",
-  measurementId: "G-RJKJ1J0JF2"
+  apiKey: "AIzaSyAjW6KT-ZZgp4NeklO_lFzegUlCIrrnpSU",
+  authDomain: "wf-multimarcas-9b585.firebaseapp.com",
+  databaseURL: "https://wf-multimarcas-9b585-default-rtdb.firebaseio.com",
+  projectId: "wf-multimarcas-9b585",
+  storageBucket: "wf-multimarcas-9b585.appspot.com",
+  messagingSenderId: "937749169981",
+  appId: "1:937749169981:web:cabb47fbbff430c5192754",
+  measurementId: "G-YRN78B7WM4"
 }
 
 firebase.initializeApp(config)
-
+firebase.analytics()
 
 new Vue({
   router,

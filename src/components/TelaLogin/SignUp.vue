@@ -17,17 +17,19 @@
             autocomplete="off"
             type="email"
             placeholder="Usuário"
+            v-model="user.email"
           />
           <v-text-field
             append-icon="mdi-lock"
             placeholder="Senha"
             type="password"
+            v-model="user.senha"
             outlined
           />
         </v-card-text>
         <v-card-actions>
           <v-row align="center" justify="center" class="ml-1 mr-1">
-            <v-btn dark rounded block height="50">Entrar</v-btn>
+            <v-btn dark rounded block height="50" @click="login">Entrar</v-btn>
           </v-row>
         </v-card-actions>
       </v-card>
@@ -36,7 +38,32 @@
 </template>
 
 <script>
-export default {};
+import { mapMutations } from "vuex";
+
+export default {
+  data(){
+    return{
+      user: {}
+    }
+  },
+  methods:{
+    ...mapMutations({
+      setUser: 'setUser'
+    }),
+
+    login(){
+      this.$firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.senha)
+          .then((user) => {
+            this.setUser(user)
+            this.$router.push('/cadastro')
+          })
+          .catch((error) => {
+            console.log(error.message)
+          });
+    }
+  }
+
+};
 </script>
 
 <style scoped></style>

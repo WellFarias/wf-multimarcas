@@ -1,8 +1,7 @@
 import Vue from "vue"
 import axios from "axios"
-import firebase from "firebase"
 
-axios.defaults.baseURL = firebase.databaseURL
+axios.defaults.baseURL = "https://wf-multimarcas-9b585-default-rtdb.firebaseio.com"
 
 Vue.use({
     install(Vue){
