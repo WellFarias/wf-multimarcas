@@ -1,9 +1,10 @@
 <template>
-  <v-footer dark padless>
-    <v-card flat tile class="indigo lighten-1 white--text text-center" style="width: 100%">
+  <v-footer dark color="black">
+    <v-card flat tile class="black white--text text-center" style="width: 100%">
       <v-card-text>
         <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
           <v-icon size="24px">{{ icon }}</v-icon>
+          <a>{{link}}</a>
         </v-btn>
       </v-card-text>
 
@@ -38,7 +39,7 @@
       <v-divider></v-divider>
 
       <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — &copy; Todos os direitos reservados 
+        &copy; {{ new Date().getFullYear() }} 
       </v-card-text>
     </v-card>
   </v-footer>
@@ -47,7 +48,7 @@
 <script>
 export default {
   data: () => ({
-    icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"]
+    icons: ["mdi-facebook", "mdi-twitter", "mdi-whatsapp", "mdi-instagram"]
   })
 };
 </script>

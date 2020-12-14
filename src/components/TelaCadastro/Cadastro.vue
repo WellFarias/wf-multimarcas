@@ -2,21 +2,23 @@
   <v-container>
       <v-row justify="center">
           <v-col cols="12">
+
             <v-text-field
+            :rules="[v=> !!v || 'Digite um nome para o carro']"
               v-model="carro.nome"
-              placeholder="Escreva o nome do carro"
+              label="Escreva o nome do carro"
               hint="Ex: Meriva, Pálio, Celta e etc"
               outlined
             ></v-text-field>
             <v-text-field
               v-model="carro.marca"
-              placeholder="Escreva a marca do carro"
+              label="Escreva a marca do carro"
               hint="Ex: Chevrolet, Fiat, Volkswagen e etc"
               outlined
             ></v-text-field>
             <v-text-field
               v-model="carro.ano"
-              placeholder="Digite o ano de fabricação"
+              label="Digite o ano de fabricação"
               hint="Ex: 2005, 2006, 2007 e etc"
               outlined
             ></v-text-field>
@@ -46,7 +48,7 @@
             <br />
             <v-text-field
               v-model="carro.km"
-              placeholder="Digite a quilometragem do carro"
+              label="Digite a quilometragem do carro"
               hint="Ex: 1000, 2000, 100000 e etc"
               outlined
             ></v-text-field>
@@ -95,7 +97,7 @@
 
             <v-text-field
               v-model="carro.cor"
-              placeholder="Digite a cor do carro"
+              label="Digite a cor do carro"
               hint="Ex: branco, azul, vermelho e etc"
               outlined
             ></v-text-field>
@@ -144,7 +146,7 @@
 
             <v-text-field
               v-model="carro.motor"
-              placeholder="Digite a potência do motor"
+              label="Digite a potência do motor"
               hint="Ex: 1.0, 1.4, 1.6 e etc"
               outlined
             ></v-text-field>
@@ -152,7 +154,7 @@
             <v-text-field
               v-model="carro.preco"
               :value="reais"
-              placeholder="Digite o preço do carro"
+              label="Digite o preço do carro"
               hint="Ex: 16.000, 20.000, 50.000 e etcs"
               outlined
               prefix="R$"
@@ -198,7 +200,7 @@ export default {
       picture: null,
       key: null,
       loading: false,
-      dinheiro: 0
+      dinheiro: 0,
     };
   },
 
@@ -225,9 +227,17 @@ export default {
     }),
 
     salvarCarro() {
-      this.onUpload()
-
-
+      this.$http.post('carros.json', this.carro).then( () => {
+        this.carro.nome
+        this.carro.marca
+        this.carro.cambio
+        this.carro.km
+        this.carro.portas
+        this.carro.cor
+        this.carro.combustivel
+        this.carro.motor
+        this.carro.preco
+        })
     },
 
     previewImage(file) {
@@ -278,9 +288,7 @@ export default {
             });
           }
       );
-    }
-
-
+    },
   },
 
   mounted(){

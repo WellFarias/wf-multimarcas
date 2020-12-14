@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
-      <v-col>
+        <v-col  v-for="(carro, id) in this.carros" :key="id">
         <v-hover>
           <template v-slot:default="{ hover }">
             <v-card
@@ -11,22 +11,22 @@
               max-width="270"
             >
               <v-img
-                src="https://localizeisitestorage.blob.core.windows.net/anuncio/375074_GGK-9070_03.jpg"
+              src="https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg"
                 height="200px"
               ></v-img>
 
-              <v-card-title> teste </v-card-title>
+              <v-card-title>{{carro.nome}}</v-card-title>
 
               <v-card-subtitle>
-                <strong> R$ 2313,2 </strong>
+                <strong>R$ {{carro.preco}}</strong>
                 <br />
-                1.0
+                {{carro.motor}}
                 <br />
-                Automatico
+                {{carro.ano}}
                 <br />
-                2020
+                {{carro.cambio}}
                 <br />
-                20.000 km
+                {{carro.km}}
               </v-card-subtitle>
               <v-fade-transition>
                 <v-overlay v-if="hover" absolute color="#000000">
@@ -40,7 +40,9 @@
               </v-fade-transition>
             </v-card>
           </template>
+
         </v-hover>
+          </v-col>
         <v-dialog
           v-model="dialog"
         >
@@ -49,11 +51,11 @@
             style="text-shadow: 0px 0px 2px #000"
             fade
             indicators
-            img-width="1024"
+            img-width="600"
             img-height="480"
           >
             <b-carousel-slide
-              img-src="https://www.giacomelliveiculos.com.br/carros/f9eba97a7e0af4ec5beb10a3d448ed7e-thumbjpg-chevrolet-celta-8371359-800-600-70.jpg"
+              img-src="https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg"
             ></b-carousel-slide>
             <b-carousel-slide
               img-src="https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg"
@@ -141,9 +143,10 @@
             </v-col>
           </v-row>
         </v-dialog>
-      </v-col>
     </v-row>
+    <v-btn @click="exibirCarro">teste</v-btn>
   </v-container>
+
 </template>
 
 <script>
@@ -153,6 +156,7 @@ export default {
   data: () => ({
     overlay: false,
     dialog: false,
+    carros: []
   }),
   computed:{
     ...mapGetters({
@@ -161,6 +165,13 @@ export default {
   },
 
   methods: {
+    exibirCarro(){
+      this.$http('carros.json').then(res => {
+        this.carros = res.data
+      })
+    }
+
+    
 
   }
 };

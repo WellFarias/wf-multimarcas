@@ -1,12 +1,14 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row align="center" justify="center">
+      <v-col cols="6">
       <v-text-field
+        style="border-radius: 50px; margin-top: 20px"
+        outlined
         append-icon="mdi-magnify"
-        label="Pesquisar"
-        single-line
-        hide-details
+        placeholder="Pesquisar Carro"
       ></v-text-field>
+      </v-col>
     </v-row>
     <Cards />
   </v-container>

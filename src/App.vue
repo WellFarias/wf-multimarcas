@@ -1,4 +1,5 @@
 <template>
+<v-app>
   <v-main>
     <router-view name="Home" />
     <router-view name="AppBar" />
@@ -8,6 +9,7 @@
     <router-view name="Footer" />
     <router-view />
   </v-main>
+</v-app>
 </template>
 
 <script>
