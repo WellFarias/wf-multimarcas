@@ -42,8 +42,8 @@ const routes = [
     }
   },
   {
-    path: '/alterar',
-    name: 'Alterar',
+    path: '/lista-carros',
+    name: 'lista-carros',
     components: {
       AppBar: AppBar,
       Alterar: Alterar

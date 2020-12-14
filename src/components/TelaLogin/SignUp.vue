@@ -2,8 +2,9 @@
   <v-container>
     <v-row>
       <v-card
-        width="600"
-        style="background-color: #bbb9b9; margin: auto; margin-top: 50px"
+        width="400"
+        height="500"
+        style="margin: auto; margin-top: 50px"
       >
         <v-card-title>
           <v-row align="center" justify="center">
@@ -55,7 +56,7 @@ export default {
       this.$firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.senha)
           .then((user) => {
             this.setUser(user)
-            this.$router.push('/cadastro')
+            this.$router.push('/lista-carros')
           })
           .catch((error) => {
             console.log(error.message)

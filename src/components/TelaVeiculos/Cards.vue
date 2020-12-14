@@ -1,9 +1,6 @@
 <template>
   <v-container>
     <v-row>
-    <b-list-group>
-    <b-list-group-item v-for="(carro, id) in this.carros" :key="id">
-     
       <v-col>
         <v-hover>
           <template v-slot:default="{ hover }">
@@ -14,42 +11,38 @@
               max-width="270"
             >
               <v-img
-                src="https://www.giacomelliveiculos.com.br/carros/f9eba97a7e0af4ec5beb10a3d448ed7e-thumbjpg-chevrolet-celta-8371359-800-600-70.jpg"
+                src="https://localizeisitestorage.blob.core.windows.net/anuncio/375074_GGK-9070_03.jpg"
                 height="200px"
               ></v-img>
 
-              <v-card-title> {{carro.nome}} </v-card-title>
+              <v-card-title> teste </v-card-title>
 
               <v-card-subtitle>
-                <strong> R${{carro.preco}} </strong>
+                <strong> R$ 2313,2 </strong>
                 <br />
-                {{carro.motor}}
+                1.0
                 <br />
-                {{carro.cambio}}
+                Automatico
                 <br />
-                {{carro.ano}}
+                2020
                 <br />
-                {{carro.km}}km
+                20.000 km
               </v-card-subtitle>
               <v-fade-transition>
                 <v-overlay v-if="hover" absolute color="#000000">
-                  <b-button
-                    v-b-modal.id
+                  <v-btn
+                    @click="dialog = true"
                     elevation="10"
                     style="background-color: #d94b4b"
-                    >Saiba mais</b-button
+                    >Saiba mais</v-btn
                   >
                 </v-overlay>
               </v-fade-transition>
             </v-card>
           </template>
         </v-hover>
-        <b-modal
-          :id="carro.id"
-          ok-only
-          ok-variant="danger"
-          scrollable
-          title="Nome do carro: "
+        <v-dialog
+          v-model="dialog"
         >
           <b-carousel
             id="carousel-fade"
@@ -72,7 +65,7 @@
           <v-row style="margin-top: 10px">
             <v-col cols="2"> </v-col>
             <v-col cols="8">
-              <h1 class="center">R${{carro.preco}}</h1>
+              <h1 class="center">R$20.000,00</h1>
             </v-col>
             <v-col cols="2"> </v-col>
           </v-row>
@@ -80,41 +73,41 @@
           <v-row>
             <v-col>
               <h6 class="my-1 center">Ano</h6>
-              <p class="my-1 center">{{carro.ano}}</p>
+              <p class="my-1 center">2020</p>
             </v-col>
             <v-divider vertical></v-divider>
             <v-col>
               <h6 class="my-1 center">Portas</h6>
-              <p class="my-1 center">{{carro.porta}}</p>
+              <p class="my-1 center">3</p>
             </v-col>
             <v-divider vertical></v-divider>
             <v-col>
               <h6 class="my-1 center">Km</h6>
-              <p class="my-1 center">{{carro.km}}</p>
+              <p class="my-1 center">20.000</p>
             </v-col>
           </v-row>
           <v-divider inset></v-divider>
           <v-row>
               <v-col>
               <h6 class="my-1 center">Potência do motor</h6>
-              <p class="my-1 center">{{carro.motor}}</p>
+              <p class="my-1 center">1.0</p>
             </v-col>
             <v-divider vertical></v-divider>
             <v-col>
               <h6 class="my-1 center">Combustivel</h6>
-              <p class="my-1 center">{{carro.combustivel}}</p>
+              <p class="my-1 center">flex</p>
             </v-col>
             <v-divider vertical></v-divider>
             <v-col>
               <h6 class="my-1 center">Cor</h6>
-              <p class="my-1 center">{{carro.cor}}</p>
+              <p class="my-1 center">Amarelo</p>
             </v-col>
           </v-row>
           <v-divider inset></v-divider>
           <v-row>
             <v-col>
               <h6 class="my-1 center">Câmbio do carro</h6>
-              <p class="my-1 center">{{carro.cambio}}</p>
+              <p class="my-1 center">Automatico</p>
             </v-col>
             <v-divider vertical></v-divider>
           </v-row>
@@ -147,28 +140,28 @@
               <p class="my-1">Roberto (11)40028922</p>
             </v-col>
           </v-row>
-        </b-modal>
+        </v-dialog>
       </v-col>
-    </b-list-group-item>
-    </b-list-group>
-    <v-btn @click="exibirCarro">TESTE!</v-btn>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
   data: () => ({
     overlay: false,
+    dialog: false,
   }),
+  computed:{
+    ...mapGetters({
+      carros: "carros"
+    })
+  },
 
   methods: {
-    exibirCarro(){
-      this.$http('carros.json').then(res => {
-        this.carros = res.data
-        console.log(this.carros)
-      })
-    }
+
   }
 };
 </script>

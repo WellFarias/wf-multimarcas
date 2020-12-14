@@ -1,19 +1,6 @@
 <template>
-  <div style="width: 100%; height: 100%; background-color: #d4d4d4">
-    <v-container>
+  <v-container>
       <v-row justify="center">
-        <v-card width="800" style="margin: auto; margin-top: 50px">
-          <h1
-            style="
-              text-align: center;
-              color: black;
-              font-weight: 300;
-              margin-top: 50px;
-            "
-          >
-            Cadastro de veículo
-          </h1>
-          <br />
           <v-col cols="12">
             <v-text-field
               v-model="carro.nome"
@@ -195,11 +182,8 @@
               </v-row>
             </v-card-actions>
           </v-col>
-        </v-card>
       </v-row>
     </v-container>
-  </div>
-
 </template>
 
 <script>
