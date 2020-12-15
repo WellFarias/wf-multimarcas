@@ -2,23 +2,22 @@
   <v-container>
       <v-row justify="center">
           <v-col cols="12">
-
             <v-text-field
-            :rules="[v=> !!v || 'Digite um nome para o carro']"
               v-model="carro.nome"
-              label="Escreva o nome do carro"
+              placeholder="Escreva o nome do carro"
               hint="Ex: Meriva, Pálio, Celta e etc"
               outlined
+              class="isvalid"
             ></v-text-field>
             <v-text-field
               v-model="carro.marca"
-              label="Escreva a marca do carro"
+              placeholder="Escreva a marca do carro"
               hint="Ex: Chevrolet, Fiat, Volkswagen e etc"
               outlined
             ></v-text-field>
             <v-text-field
               v-model="carro.ano"
-              label="Digite o ano de fabricação"
+              placeholder="Digite o ano de fabricação"
               hint="Ex: 2005, 2006, 2007 e etc"
               outlined
             ></v-text-field>
@@ -48,7 +47,7 @@
             <br />
             <v-text-field
               v-model="carro.km"
-              label="Digite a quilometragem do carro"
+              placeholder="Digite a quilometragem do carro"
               hint="Ex: 1000, 2000, 100000 e etc"
               outlined
             ></v-text-field>
@@ -97,7 +96,7 @@
 
             <v-text-field
               v-model="carro.cor"
-              label="Digite a cor do carro"
+              placeholder="Digite a cor do carro"
               hint="Ex: branco, azul, vermelho e etc"
               outlined
             ></v-text-field>
@@ -146,7 +145,7 @@
 
             <v-text-field
               v-model="carro.motor"
-              label="Digite a potência do motor"
+              placeholder="Digite a potência do motor"
               hint="Ex: 1.0, 1.4, 1.6 e etc"
               outlined
             ></v-text-field>
@@ -154,7 +153,7 @@
             <v-text-field
               v-model="carro.preco"
               :value="reais"
-              label="Digite o preço do carro"
+              placeholder="Digite o preço do carro"
               hint="Ex: 16.000, 20.000, 50.000 e etcs"
               outlined
               prefix="R$"
@@ -190,6 +189,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   data() {
@@ -200,8 +200,14 @@ export default {
       picture: null,
       key: null,
       loading: false,
-      dinheiro: 0,
+      dinheiro: 0
     };
+  },
+
+  validations: {
+    nome: {
+      required
+    }
   },
 
   computed: {
@@ -212,6 +218,10 @@ export default {
 
     reais(){
       return this.carro.preco?.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+    },
+
+    isValid(){
+      return !this.$v.nome.$isvalid
     }
   },
 
@@ -227,17 +237,14 @@ export default {
     }),
 
     salvarCarro() {
-      this.$http.post('carros.json', this.carro).then( () => {
-        this.carro.nome
-        this.carro.marca
-        this.carro.cambio
-        this.carro.km
-        this.carro.portas
-        this.carro.cor
-        this.carro.combustivel
-        this.carro.motor
-        this.carro.preco
-        })
+      if(this.isValid){
+        this.onUpload()
+      }
+    },
+
+     setNome(value) {
+      this.carro.nome = value
+      this.$v.nome.$touch()
     },
 
     previewImage(file) {
@@ -288,7 +295,9 @@ export default {
             });
           }
       );
-    },
+    }
+
+
   },
 
   mounted(){

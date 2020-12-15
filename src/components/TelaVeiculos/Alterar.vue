@@ -92,12 +92,15 @@
             ok-variant="danger"
             cancel-title="Cancelar"
             v-model="modalShow"
-        ><h3>Deseja excluir o veículos?</h3>
+        ><h3>Tem certeza que deseja excluir o veículo?</h3>
         </b-modal>
 
         <b-modal
             v-if="dialogAlteracao"
             v-model="dialogAlteracao"
+            ok-title="Alterar"
+            ok-variant="primary"
+            cancel-title="Cancelar"
             width="800"
             title="Alterar veículo"
             color="white"
