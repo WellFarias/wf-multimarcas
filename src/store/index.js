@@ -64,6 +64,12 @@ export default new Vuex.Store({
       return state.carro;
     },
 
+    exibirCarros(state) {
+      this.$http('carros.json').then(res => {
+        return state.carros = res.data
+      })
+    },
+
     user(state){
       return state.user
     }
@@ -89,9 +95,9 @@ export default new Vuex.Store({
   },
   actions: {
     salvarCarro({commit}, payload){
-      commit('addCarros', payload)
-    }
-  },
+          commit('salvarCarro', payload)
+        }
+      },
   modules: {
   }
 })

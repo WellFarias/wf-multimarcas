@@ -1,6 +1,6 @@
 <template>
   <v-app>
-      <v-container>
+      <v-container fluid>
         <br />
         <h1 style="text-align: center; color: black; font-weight: 300">
           Veículos cadastrados
@@ -12,14 +12,16 @@
                 width="800"
             >
               <template v-slot:activator="{ on, attrs }">
+                <v-row align="end" justify="end" style="margin: auto">
                 <v-btn
-                    color="primary"
+                    color="secondary"
                     dark
                     v-bind="attrs"
                     v-on="on"
                 >
                   + Cadastrar Veiculo
                 </v-btn>
+                </v-row>
               </template>
               <v-card>
                 <v-card-title class="headline grey lighten-2">
@@ -30,173 +32,159 @@
             </v-dialog>
           </v-col>
         </v-row>
-        <br />
         <v-row>
-          <v-col v-for="(carro, index) in carros" :key="index" >
-            <v-hover>
-              <template v-slot:default="{ hover }">
-                <v-card
-                    style="background-color: #cbcbcb"
-                    elevation="1"
-                    class="mx-auto"
-                    max-width="270"
-                >
-                  <v-img
-                      :src="carro.foto"
-                      height="200px"
-                  ></v-img>
+          <v-col  v-for="(carro, id) in this.carros" :key="id">
+        <v-hover>
+          <template v-slot:default="{ hover }">
+            <v-card
+              style="background-color: #cbcbcb"
+              elevation="1"
+              class="mx-auto"
+              max-width="270"
+            >
+              <v-img
+              src="https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg"
+                height="200px"
+              ></v-img>
 
-                  <v-card-title> {{carro.titulo}} </v-card-title>
+              <v-card-title>{{carro.nome}}</v-card-title>
 
-                  <v-card-subtitle>
-                    <strong> {{carro.preco}} </strong>
-                    <br />
-                    {{carro.nome}}
-                    <br />
-                    {{ carro.ano }}
-                    <br />
-                    {{ carro.cambio }}
-                    <br />
-                    {{ carro.combustivel }}
-                  </v-card-subtitle>
-                  <v-fade-transition>
-                    <v-overlay v-if="hover" absolute color="#000000">
-                      <v-row>
-                        <v-col>
-                          <b-button
-                              @click="alterar(index)"
-                              style="background-color: #4878e6"
-                          >Alterar</b-button
-                          >
-                        </v-col>
-                        <v-col>
-                          <b-button
-                              v-b-modal
-                              elevation="10"
-                              style="background-color: #d94b4b"
-                              @click="modalShow = !modalShow"
-                          >Excluir</b-button
-                          >
-                        </v-col>
-                      </v-row>
-                    </v-overlay>
-                  </v-fade-transition>
-                </v-card>
-              </template>
-            </v-hover>
+              <v-card-subtitle>
+                <strong>R$ {{carro.preco}}</strong>
+                <br />
+                {{carro.motor}}
+                <br />
+                {{carro.ano}}
+                <br />
+                {{carro.cambio}}
+                <br />
+                {{carro.km}}
+              </v-card-subtitle>
+              <v-fade-transition>
+                <v-overlay v-if="hover" absolute color="#000000">
+                  <v-btn
+                    @click="deleteCarro(id)"
+                    elevation="10"
+                    color="secondary"
+                    
+                    >Excluir</v-btn>
+                    <v-btn class="ml-2" color="blue" @click="atualizarCarro(id)">Alterar</v-btn>
+                </v-overlay>
+              </v-fade-transition>
+            </v-card>
+          </template>
+
+        </v-hover>
           </v-col>
-        </v-row>
-
-        <b-modal
-            ok-title="Excluir"
-            ok-variant="danger"
-            cancel-title="Cancelar"
-            v-model="modalShow"
-        ><h3>Deseja excluir o veículos?</h3>
-        </b-modal>
-
-        <b-modal
-            v-if="dialogAlteracao"
-            v-model="dialogAlteracao"
-            width="800"
-            title="Alterar veículo"
-            color="white"
+          </v-row>
+        <v-dialog
+          v-model="dialog"
         >
-          <v-row style="margin-top: 20px" >
+          <b-carousel
+            id="carousel-fade"
+            style="text-shadow: 0px 0px 2px #000"
+            fade
+            indicators
+            img-width="600"
+            img-height="480"
+          >
+            <b-carousel-slide
+              img-src="https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg"
+            ></b-carousel-slide>
+            <b-carousel-slide
+              img-src="https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg"
+            ></b-carousel-slide>
+            <b-carousel-slide
+              img-src="https://www.giacomelliveiculos.com.br/carros/556959e50b7088c510b60e065990225e-thumbjpg-chevrolet-celta-8371359-1000-750-70.jpg"
+            ></b-carousel-slide>
+          </b-carousel>
+          <v-row style="margin-top: 10px">
             <v-col cols="2"> </v-col>
-            <v-col>
-              <h4 class="left">Nome</h4>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].nome"></v-text-field>
-              </p>
+            <v-col cols="8">
+              <h1 class="center">R$20.000,00</h1>
             </v-col>
+            <v-col cols="2"> </v-col>
+          </v-row>
 
-            <v-col cols="2"> </v-col>
+          <v-row>
+            <v-col>
+              <h6 class="my-1 center">Ano</h6>
+              <p class="my-1 center">2020</p>
+            </v-col>
+            <v-divider vertical></v-divider>
+            <v-col>
+              <h6 class="my-1 center">Portas</h6>
+              <p class="my-1 center">3</p>
+            </v-col>
+            <v-divider vertical></v-divider>
+            <v-col>
+              <h6 class="my-1 center">Km</h6>
+              <p class="my-1 center">20.000</p>
+            </v-col>
           </v-row>
           <v-divider inset></v-divider>
           <v-row>
-            <v-col cols="6">
-              <h6 class="my-1">Preço</h6>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].preco"></v-text-field>
-              </p>
-            </v-col>
-            <v-divider vertical></v-divider>
-            <v-col cols="5">
-              <h6 class="my-1">Nome</h6>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].nome"></v-text-field>
-              </p>
-            </v-col>
-            <v-divider vertical></v-divider>
-            <v-col cols="6">
-              <h6 class="my-1">Marca</h6>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].marca"></v-text-field>
-              </p>
+              <v-col>
+              <h6 class="my-1 center">Potência do motor</h6>
+              <p class="my-1 center">1.0</p>
             </v-col>
             <v-divider vertical></v-divider>
             <v-col>
-              <h6 class="my-1">Câmbio do carro</h6>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].cambio"></v-text-field>
-              </p>
-            </v-col>
-            <v-divider vertical></v-divider>
-          </v-row>
-          <v-divider inset></v-divider>
-          <v-row>
-            <v-col>
-              <h6 class="my-1">Ano</h6>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].ano"></v-text-field>
-              </p>
+              <h6 class="my-1 center">Combustivel</h6>
+              <p class="my-1 center">flex</p>
             </v-col>
             <v-divider vertical></v-divider>
             <v-col>
-              <h6 class="my-1">Portas</h6>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].portas"></v-text-field>
-              </p>
-            </v-col>
-            <v-divider vertical></v-divider>
-            <v-col>
-              <h6 class="my-1">Km</h6>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].km"></v-text-field>
-              </p>
+              <h6 class="my-1 center">Cor</h6>
+              <p class="my-1 center">Amarelo</p>
             </v-col>
           </v-row>
           <v-divider inset></v-divider>
           <v-row>
             <v-col>
-              <h6 class="my-1">Potência do motor</h6>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].potencia"></v-text-field>
-              </p>
+              <h6 class="my-1 center">Câmbio do carro</h6>
+              <p class="my-1 center">Automatico</p>
             </v-col>
             <v-divider vertical></v-divider>
-            <v-col>
-              <h6 class="my-1">Combustivel</h6>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].combustivel"></v-text-field>
-              </p>
+          </v-row>
+          <v-divider inset></v-divider>
+          <v-row>
+            <h4 class="center">
+              Entre em contato com a gente ou vá até a loja, para fazer o
+              finânciamento!
+            </h4>
+          </v-row>
+          <v-divider inset></v-divider>
+          <v-row>
+            <p class="my-1" style="margin: 5%">
+              Endereço: Rua Raimundo Carneiro 123
+            </p>
+          </v-row>
+          <v-row>
+            <p class="my-1" style="margin: 5%">
+              Funcionamento: Segunda à Sexta | 9h00 às 18h00 e aos Sábados |
+              9h00 às 15h00
+            </p>
+          </v-row>
+          <v-divider inset></v-divider>
+          <v-row>
+            <v-col cols="2">
+              <p class="my-1" style="margin: 20%">Contatos:</p>
             </v-col>
-            <v-divider vertical></v-divider>
             <v-col>
-              <h6 class="my-1">Cor</h6>
-              <p class="my-1 center">
-                <v-text-field v-model="carros[index].cor"></v-text-field>
-              </p>
+              <p class="my-1">Fulao (11)945824785</p>
+              <p class="my-1">Roberto (11)40028922</p>
             </v-col>
           </v-row>
-        </b-modal>
+        </v-dialog>
+        <br />
+        <v-btn @click="exibirCarro">teste</v-btn>
       </v-container>
   </v-app>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+//import {mapGetters} from 'vuex'
 import TelaCadastro from '../TelaCadastro/Cadastro'
 
 export default {
@@ -206,16 +194,18 @@ export default {
       dialog: false,
       modalShow: false,
       index: -1,
+      carros: [],
+      id: null
     };
   },
   computed:{
-    ...mapGetters({
-      carros: "carros"
-    })
+    //...mapGetters({
+    //  carros: "carros"
+  //  })
   },
 
   components:{
-    TelaCadastro
+    TelaCadastro,
   },
   methods:{
     alterar(index){
@@ -225,6 +215,19 @@ export default {
       console.log("CARRO: ", this.carro)
       console.log(this.index)
       this.dialogAlteracao = true
+    },
+     exibirCarro(){
+      this.$http('carros.json').then(res => {
+        this.carros = res.data
+      })
+    },
+    deleteCarro(id) {
+      this.$http.delete(`/carros/${id}.json`).then()
+      console.log("carro removido", id)
+    },
+    atualizarCarro(id) {
+      this.$http.put(`/carros/${id}.json`).then()
+      console.log('Carro Atualizado !!')
     }
   }
 };

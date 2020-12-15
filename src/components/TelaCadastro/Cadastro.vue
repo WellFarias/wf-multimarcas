@@ -226,8 +226,11 @@ export default {
       salvarCarro: "salvarCarros",
     }),
 
+   
+
     salvarCarro() {
       this.$http.post('carros.json', this.carro).then( () => {
+
         this.carro.nome
         this.carro.marca
         this.carro.cambio
