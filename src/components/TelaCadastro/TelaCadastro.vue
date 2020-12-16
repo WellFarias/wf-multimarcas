@@ -1,22 +1,58 @@
 <template>
-  <v-container>
-      <v-row justify="center">
+    <v-dialog
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="secondary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          + Cadastrar Veiculo
+        </v-btn>
+      </template>
+      <v-card>
+        <v-toolbar
+          dark
+          color="black"
+        >
+         
+          <v-toolbar-title>Cadastro de Veiculo</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+           <v-btn
+            icon
+            dark
+            @click="dialog = false"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+         <v-row justify="center">
+        <v-form v-model="valid" style="width: 1000px">
           <v-col cols="12">
 
             <v-text-field
-            :rules="[v=> !!v || 'Digite um nome para o carro']"
+            :rules="inputRules"
               v-model="carro.nome"
               label="Escreva o nome do carro"
               hint="Ex: Meriva, Pálio, Celta e etc"
               outlined
             ></v-text-field>
             <v-text-field
+            :rules="inputRules"
               v-model="carro.marca"
               label="Escreva a marca do carro"
               hint="Ex: Chevrolet, Fiat, Volkswagen e etc"
               outlined
             ></v-text-field>
             <v-text-field
+            :rules="inputRules"
               v-model="carro.ano"
               label="Digite o ano de fabricação"
               hint="Ex: 2005, 2006, 2007 e etc"
@@ -25,28 +61,23 @@
 
             <hr />
             <h5>Número de portas</h5>
-            <v-row justify="center" align-items="center">
-              <v-col cols="3">
-                <b-form-radio name="radio-size" value="2" v-model="carro.porta"
-                  ><strong>2</strong></b-form-radio
-                >
+             <v-radio-group v-model="carro.porta" row :rules="inputRules">
+              <v-col cols="2">
+              <v-radio label="2" color="red" value="2"></v-radio>
               </v-col>
               <v-divider vertical></v-divider>
-              <v-col cols="3">
-                <b-form-radio name="radio-size" value="3" v-model="carro.porta"
-                  ><strong>3</strong></b-form-radio
-                >
+              <v-col cols="2">
+              <v-radio label="3" color="red" value="3"></v-radio>
               </v-col>
               <v-divider vertical></v-divider>
-              <v-col cols="3">
-                <b-form-radio name="radio-size" value="4" v-model="carro.porta"
-                  ><strong>4</strong></b-form-radio
-                >
+              <v-col cols="2">
+              <v-radio label="4" color="red" value="4"></v-radio>
               </v-col>
-            </v-row>
+            </v-radio-group>
             <hr />
             <br />
             <v-text-field
+            :rules="inputRules"
               v-model="carro.km"
               label="Digite a quilometragem do carro"
               hint="Ex: 1000, 2000, 100000 e etc"
@@ -55,47 +86,28 @@
 
             <hr />
             <h5>Tipo de combustivel</h5>
-            <v-row justify="center" align-items="center">
+            <v-radio-group v-model="carro.combustivel" row :rules="inputRules">
               <v-col cols="2">
-                <b-form-radio
-                  name="radio-size1"
-                  value="gasolina"
-                  v-model="carro.combustivel"
-                  ><strong>Gasolina</strong></b-form-radio
-                >
+              <v-radio label="Gasolina" color="red" value="gasolina"></v-radio>
               </v-col>
               <v-divider vertical></v-divider>
               <v-col cols="2">
-                <b-form-radio
-                  name="radio-size1"
-                  value="alcool"
-                  v-model="carro.combustivel"
-                  ><strong>Álcool</strong></b-form-radio
-                >
+              <v-radio label="Álcool" color="red" value="alcool"></v-radio>
               </v-col>
               <v-divider vertical></v-divider>
               <v-col cols="2">
-                <b-form-radio
-                  name="radio-size1"
-                  value="gnv"
-                  v-model="carro.combustivel"
-                  ><strong>GNV</strong></b-form-radio
-                >
+              <v-radio label="GNV" color="red" value="gnv"></v-radio>
               </v-col>
               <v-divider vertical></v-divider>
               <v-col cols="2">
-                <b-form-radio
-                  name="radio-size1"
-                  value="flex"
-                  v-model="carro.combustivel"
-                  ><strong>Flex</strong></b-form-radio
-                >
+              <v-radio label="Flex" color="red" value="flex"></v-radio>
               </v-col>
-            </v-row>
+            </v-radio-group>
             <hr />
             <br />
 
             <v-text-field
+            :rules="inputRules"
               v-model="carro.cor"
               label="Digite a cor do carro"
               hint="Ex: branco, azul, vermelho e etc"
@@ -104,47 +116,28 @@
 
             <hr />
             <h5>Câmbio do carro</h5>
-            <v-row justify="center" align-items="center">
-              <v-col cols="3">
-                <b-form-radio
-                  name="radio-size2"
-                  value="mecanico"
-                  v-model="carro.cambio"
-                  ><strong>Mecânico</strong></b-form-radio
-                >
-              </v-col>
-              <v-divider vertical></v-divider>
-              <v-col cols="3">
-                <b-form-radio
-                  name="radio-size2"
-                  value="automatizado"
-                  v-model="carro.cambio"
-                  ><strong>Automátizado</strong></b-form-radio
-                >
-              </v-col>
-              <v-divider vertical></v-divider>
-              <v-col cols="3">
-                <b-form-radio
-                  name="radio-size2"
-                  value="automatico"
-                  v-model="carro.cambio"
-                  ><strong>Automático</strong></b-form-radio
-                >
+            <v-radio-group v-model="carro.cambio" row :rules="inputRules">
+              <v-col cols="2">
+              <v-radio label="Manual" color="red" value="manual"></v-radio>
               </v-col>
               <v-divider vertical></v-divider>
               <v-col cols="2">
-                <b-form-radio
-                  name="radio-size2"
-                  value="cvt"
-                  v-model="carro.cambio"
-                  ><strong>CVT</strong></b-form-radio
-                >
+              <v-radio label="Automático sequencial" color="red" value="automatizado"></v-radio>
               </v-col>
-            </v-row>
+              <v-divider vertical></v-divider>
+              <v-col cols="2">
+              <v-radio label="Automático" color="red" value="automatico"></v-radio>
+              </v-col>
+              <v-divider vertical></v-divider>
+              <v-col cols="2">
+              <v-radio label="CVT" color="red" value="cvt"></v-radio>
+              </v-col>
+            </v-radio-group>
             <hr />
             <br />
 
             <v-text-field
+            :rules="inputRules"
               v-model="carro.motor"
               label="Digite a potência do motor"
               hint="Ex: 1.0, 1.4, 1.6 e etc"
@@ -152,6 +145,7 @@
             ></v-text-field>
 
             <v-text-field
+            :rules="inputRules"
               v-model="carro.preco"
               :value="reais"
               label="Digite o preço do carro"
@@ -162,6 +156,7 @@
             <v-row>
               <v-col cols="8">
                 <v-file-input
+                :rules="inputRules"
                     v-model="carro.fotos"
                     multiple
                     @change="previewImages"
@@ -178,14 +173,16 @@
 
             <v-card-actions>
               <v-row align="center" justify="center" class="ml-1 mr-1">
-                <v-btn dark rounded block height="50" @click="salvarCarro"
+                <v-btn dark rounded block height="50" :disabled="!valid" @click="salvarCarro"
                   >Cadastrar</v-btn
                 >
               </v-row>
             </v-card-actions>
           </v-col>
+          </v-form>
       </v-row>
-    </v-container>
+      </v-card>
+    </v-dialog>
 </template>
 
 <script>
@@ -201,6 +198,12 @@ export default {
       key: null,
       loading: false,
       dinheiro: 0,
+      valid: false,
+      inputRules: [(v) => !!v || "Campo obrigatório"],
+      dialog: false,
+      notifications: false,
+      sound: true,
+      widgets: false,
     };
   },
 
@@ -227,21 +230,24 @@ export default {
     }),
 
    
-
-    salvarCarro() {
-      this.$http.post('carros.json', this.carro).then( () => {
-
-        this.carro.nome
-        this.carro.marca
-        this.carro.cambio
-        this.carro.km
-        this.carro.portas
-        this.carro.cor
-        this.carro.combustivel
-        this.carro.motor
-        this.carro.preco
-        })
+    limpar(){
+      this.$store.state.carro = "",
+      this.$store.state.id = null
     },
+    salvarCarro() {
+      const metodo = this.id ? 'patch' : 'post'
+      const finalUrl =  this.id ? `/${this.id}.json` : '.json'
+      this.$http[metodo](`/carros${finalUrl}`, this.carro).then( () => {
+        this.$store.state.carro;
+        this.limpar();
+      })
+    },
+
+   /* salvarCarro(){
+      if(this.isValid){
+        this.onUpload()
+      }
+    },*/
 
     previewImage(file) {
         this.uploadValue=0;

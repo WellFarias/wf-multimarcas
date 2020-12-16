@@ -4,7 +4,6 @@
     <router-view name="Home" />
     <router-view name="AppBar" />
     <router-view name="Veiculos" />
-    <router-view name="Cadastro" />
     <router-view name="Alterar" />
     <router-view name="Footer" />
     <router-view />
@@ -37,5 +36,24 @@ export default {
 
 .center {
   text-align: center;
+}
+::-webkit-scrollbar-track {
+    background-color: white;
+}
+::-webkit-scrollbar {
+    width: 9px;
+    background: #F4F4F4;
+    border-radius: 50px;
+
+
+}
+::-webkit-scrollbar-thumb {
+    background: rgb(126, 125, 125);
+    border-radius: 50px;
+}
+::-webkit-scrollbar-track-piece{
+  background: rgb(212, 212, 212);
+    border-radius: 50px;
+
 }
 </style>
