@@ -1,12 +1,12 @@
 <template>
   <v-container fluid>
     <v-row>
-        <v-col  v-for="(carro, id) in this.carros" :key="id">
+        <v-col sx="4" sm="6" md="4" lg="3"  v-for="(carro, id) in this.carros" :key="id" >
         <v-hover>
           <template v-slot:default="{ hover }">
             <v-card class="mx-auto" max-width="344" max-height="550" color="grey lighten-4">
               <v-img
-              src="https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg"
+              :src="carro.fotos? carro.fotos[0] : ''"
                 height="300px"
               ></v-img>
               <v-card-title>{{carro.marca}} - {{carro.nome}}</v-card-title>
@@ -38,9 +38,9 @@
               </v-card-title>
               <v-carousel hide-delimiters>
                 <v-carousel-item
-                  v-for="(item, i) in items"
+                  v-for="(foto, i) in carro.fotos"
                   :key="i"
-                  :src="item.src"
+                  :src="foto"
                 ></v-carousel-item>
               </v-carousel>
               <v-card-text>
@@ -134,7 +134,6 @@
             </v-card>
           </v-dialog>
       </v-row>
-    <v-btn @click="exibirCarro">teste</v-btn>
   </v-container>
 </template>
 
@@ -146,45 +145,37 @@ export default {
     overlay: false,
     dialog: false,
     id: null,
-     items: [
-      {
-        src:
-          "https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg",
-      },
-      {
-        src:
-          "https://i.pinimg.com/originals/9e/ed/55/9eed5577cc87a3906efb8777ac694181.jpg",
-      },
-      {
-        src:
-          "https://www.giacomelliveiculos.com.br/carros/556959e50b7088c510b60e065990225e-thumbjpg-chevrolet-celta-8371359-1000-750-70.jpg",
-      },
-    ],
   }),
   computed:{
-    ...mapGetters({
-      carros: "carros"
-    })
+   ...mapGetters({
+      carros: "carros",
+    }),
   },
 
   methods: {
-    exibirCarro(){
-      this.$http('carros.json').then(res => {
-       return this.$store.state.carros = res.data
-      })
-    },
+     
+      exibirCarro(){
+        this.$http('carros.json').then(res => {
+          return this.$store.state.carros = res.data
+        })
+      },
+
     cadastrarCarro(id){
       this.id = id
-      console.log(this.carros[this.id])
+      //console.log(this.carros[this.id])
       this.carro = this.carros[id]
-      console.log("CARRO: ", this.carro)
-      console.log(this.id)
+     // console.log("CARRO: ", this.carro)
+      //console.log(this.id)
       this.dialog = true
-    }
+    },
+   
 
-    
+  },
+  created(){
+    this.exibirCarro();
 
   }
+ 
 };
 </script>
 

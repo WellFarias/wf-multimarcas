@@ -13,18 +13,7 @@
 
 <script>
 export default {
-  /*
-  created() {
-    this.$http
-      .post("carros.json", {
-        nome: "Meriva",
-        marca: "Chevrolet",
-        cor: "preto",
-        ano: "1997",
-      })
-      .then((res) => console.log(res));
-  },
-  */
+  
 };
 </script>
 
@@ -36,6 +25,9 @@ export default {
 
 .center {
   text-align: center;
+}
+.margin {
+  margin: auto;
 }
 ::-webkit-scrollbar-track {
     background-color: white;

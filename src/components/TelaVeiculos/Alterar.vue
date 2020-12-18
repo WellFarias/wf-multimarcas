@@ -15,7 +15,7 @@
             <template v-slot:default="{ hover }">
               <v-card class="mx-auto" max-width="344" max-height="550" color="grey lighten-4">
                 <v-img
-                  src="https://img.clasf.com.br/2019/07/24/Chevrolet-Celta-Spirit-Lt-1-0-Mpfi-8v-Flexp-5p-20190724202628.8521980015.jpg"
+                :src="carro.fotos ? carro.fotos[0] : ''"
                   height="300px"
                 ></v-img>
 
@@ -32,7 +32,7 @@
                 <v-fade-transition>
                   <v-overlay v-if="hover" absolute color="#000000">
                     <v-btn elevation="10" color="secondary"  @click="deleteCarro(id)">Excluir</v-btn>
-                    <v-btn class="ml-2" color="blue" @click="alterar(id), atualizarCarro(id)">Editar</v-btn>
+                    <v-btn class="ml-2" color="blue" @click="alterar(id)">Editar</v-btn>
                   </v-overlay>
                 </v-fade-transition>
               </v-card>
@@ -114,7 +114,7 @@
                     <h6 class="my-1">Portas</h6>
                     <p class="my-1 center">
                       <v-text-field
-                        v-model="carros[index].portas"
+                        v-model="carros[index].porta"
                       ></v-text-field>
                     </p>
                   </v-col>
@@ -132,7 +132,7 @@
                     <h6 class="my-1">Potência do motor</h6>
                     <p class="my-1 center">
                       <v-text-field
-                        v-model="carros[index].potencia"
+                        v-model="carros[index].motor"
                       ></v-text-field>
                     </p>
                   </v-col>
@@ -171,7 +171,6 @@
         </v-dialog>
       </v-row>
       <br />
-      <v-btn @click="exibirCarro">teste</v-btn>
     </v-container>
   </v-app>
 </template>
@@ -209,28 +208,23 @@ export default {
       this.dialogAlteracao = true;
     },
 
-    exibirCarro() {
-      this.$http("carros.json").then(res => {
-        return (this.$store.state.carros = res.data);
-      });
-    },
-
     deleteCarro(id) {
       this.$http.delete(`/carros/${id}.json`).then();
       console.log("carro removido", id);
     },
 
-    atualizarCarro(id) {
-      this.id = id
-      this.carro = { ...this.carros[id] }
-    },
     salvarCarro() {
-      this.$http.put(`carros/${this.id}.json`, this.carro).then( () => {
+      this.$http.put(`carros/${this.carro.id}.json`, this.carro).then( () => {
         this.$store.state.carro;
-        console.log('Carro atualizado', this.id)
+        console.log('Carro atualizado', this.carro.id)
       })
     },
-  }
+  },
+  created(){
+      this.$http("carros.json").then(res => {
+        return (this.$store.state.carros = res.data);
+      });
+    }
 };
 </script>
 

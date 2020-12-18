@@ -6,7 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     carros: [],
-    carro: {},
+    carro: {
+      fotos:[]
+    },
     id: null,
     user: {}
   },
@@ -36,6 +38,9 @@ export default new Vuex.Store({
 
     addCarros(state, payload){
       state.carros.push(payload)
+    },
+    addFotos(state, payload){
+      state.carro.fotos.push(payload)
     },
 
     setUser(state, payload){

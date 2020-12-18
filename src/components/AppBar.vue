@@ -8,9 +8,8 @@
     dark
     elevate-on-scroll
   >
-    <div style="height: 100%; display: flex; margin: auto">
-      <img src="/wf-logo.png" alt="" style="width: 200px; margin-left: -20px" />
-      <div style="margin-left: 840px">
+      <img src="/wf-logo.png" alt="" style="width: 200px" />
+      <v-spacer></v-spacer>
         <v-btn
           @click="home"
           elevation="0"
@@ -24,15 +23,13 @@
           style="color: white; background-color: black; height: 100%"
           >Veiculos</v-btn
         >
-      </div>
-    </div>
   </v-app-bar>
 </template>
 
 <script>
 export default {
   data: () => ({
-    isScrolling: false,
+    isScrolling: false,    
   }),
 
   methods: {

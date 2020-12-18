@@ -34,7 +34,7 @@
           </v-toolbar-items>
         </v-toolbar>
          <v-row justify="center">
-        <v-form v-model="valid" style="width: 1000px">
+        <v-form  v-model="valid" lazy-validation style="width: 1000px">
           <v-col cols="12">
 
             <v-text-field
@@ -157,7 +157,7 @@
               <v-col cols="8">
                 <v-file-input
                 :rules="inputRules"
-                    v-model="carro.fotos"
+                    v-model="imageAux.fotos"
                     multiple
                     @change="previewImages"
                     append-icon="mdi-camera"
@@ -191,13 +191,15 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
+      imageAux: {},
+      fotos: [],
       images : [],
       imageData: null,
       uploadValue: 0,
       picture: null,
       key: null,
       loading: false,
-      dinheiro: 0,
+     // dinheiro: 0,
       valid: false,
       inputRules: [(v) => !!v || "Campo obrigatório"],
       dialog: false,
@@ -214,7 +216,7 @@ export default {
     }),
 
     reais(){
-      return this.carro.preco?.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+      return this.$store.state.carro.preco?.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
     }
   },
 
@@ -231,23 +233,17 @@ export default {
 
    
     limpar(){
-      this.$store.state.carro = "",
-      this.$store.state.id = null
-    },
-    salvarCarro() {
-      const metodo = this.id ? 'patch' : 'post'
-      const finalUrl =  this.id ? `/${this.id}.json` : '.json'
-      this.$http[metodo](`/carros${finalUrl}`, this.carro).then( () => {
-        this.$store.state.carro;
-        this.limpar();
-      })
+      this.$store.state.carro = ""
+      this.$store.state.id = ""
+
     },
 
-   /* salvarCarro(){
-      if(this.isValid){
-        this.onUpload()
-      }
-    },*/
+    salvarCarro(){
+      console.log( "carro á salvar",this.$store.state.carro)
+      this.$http.post('/carros.json', this.$store.state.carro).then( () => {
+        this.limpar()
+       })
+    },
 
     previewImage(file) {
         this.uploadValue=0;
@@ -261,20 +257,21 @@ export default {
 
     uploadImages(){
       this.loading = true
-      console.log("images", this.images)
       for (let i = 0; i < this.images.length; i++){
         let file = this.images[i]
-        console.log("file", file)
         const storageRef= this.$firebase.storage().ref(file.name).put(file);
         storageRef.on(`state_changed`,()=>{
             }, error=>{console.log(error.message)},
             ()=>{
               storageRef.snapshot.ref.getDownloadURL().then((url)=>{
-                this.carro.fotos.push(url)
+                 this.$store.commit('addFotos', url);
+
               });
             }
         );
+
       }
+        this.imagens = []
 
       setTimeout(() => {
         this.loading = false
@@ -282,27 +279,13 @@ export default {
 
     },
 
-    onUpload(){
-      this.picture=null;
-      const storageRef= this.$firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
-      storageRef.on(`state_changed`,snapshot=>{
-            this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-          }, error=>{console.log(error.message)},
-          ()=>{this.uploadValue=100;
-            storageRef.snapshot.ref.getDownloadURL().then((url)=>{
-              this.carro.fotoPrincipal = url
-              this.$firebase.database().ref("/carros").push(this.carro).then((savedItem) =>{
-                this.addCarros(savedItem)
-              })
-            });
-          }
-      );
-    },
   },
-
+  created(){
+    console.log( " O CARRO ", this.$store.state.carro)
+  },
   mounted(){
     console.log(this.$firebase)
-  }
+  },
 };
 
 </script>

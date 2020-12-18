@@ -4,9 +4,10 @@
       <br />
       <h1 style="text-align: center; color: white; font-weight: 300">Veículos em Destaques</h1>
       <br />
-
+      <div style="display: flex; margin: auto">
       <v-row>
-        <v-card class="mx-auto" max-width="344">
+        <v-col   xs="12" sm="6" md="4" lg="4">
+        <v-card  class="mx-auto" max-width="300">
           <v-img src="/fiat-palio.jpg" height="200px"></v-img>
 
           <v-card-title>R$ 16.000,00</v-card-title>
@@ -19,9 +20,10 @@
             <v-spacer></v-spacer>
           </v-card-actions>
         </v-card>
-        <v-spacer></v-spacer>
+        </v-col>
 
-        <v-card class="mx-auto" max-width="344">
+        <v-col   xs="12" sm="6" md="4" lg="4">
+        <v-card class="mx-auto" max-width="300">
           <v-img src="/fusca.jpg" height="200px"></v-img>
 
           <v-card-title>R$ 1.000.000,00</v-card-title>
@@ -34,10 +36,10 @@
             <v-spacer></v-spacer>
           </v-card-actions>
         </v-card>
+        </v-col>
 
-        <v-spacer></v-spacer>
-
-        <v-card class="mx-auto" max-width="344">
+        <v-col xs="12" sm="6" md="4" lg="4">
+        <v-card class="mx-auto" max-width="300">
           <v-img src="/golf.jpg" height="200px"></v-img>
 
           <v-card-title>R$ 25.000,00</v-card-title>
@@ -50,7 +52,9 @@
             <v-spacer></v-spacer>
           </v-card-actions>
         </v-card>
+        </v-col>
       </v-row>
+      </div>
     </v-container>
   </div>
 </template>
