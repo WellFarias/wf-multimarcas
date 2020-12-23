@@ -213,6 +213,7 @@ export default {
     ...mapGetters({
       carros: "carros",
       carro: "carro",
+      id: "id"
     }),
 
     reais(){
@@ -241,10 +242,18 @@ export default {
     salvarCarro(){
       console.log( "carro á salvar",this.$store.state.carro)
       this.$http.post('/carros.json', this.$store.state.carro).then( () => {
-        this.limpar()
+         this.limpar()
        })
     },
 
+    /*salvarCarro() {
+      var newCarroKey = this.$firebase.database().ref().child('carros').push().key;
+      var updates = {}
+      updates['/carros' + newCarroKey] = this.$store.state.carro
+      return this.$firebase.database().ref().update(updates)
+      
+    },*/
+   
     previewImage(file) {
         this.uploadValue=0;
         this.picture=null;

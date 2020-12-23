@@ -1,7 +1,18 @@
 <template>
   <v-container fluid>
+     <v-row align="center" justify="center">
+      <v-col xs="12" sm="6" md="6" lg="6">
+      <v-text-field
+        style="border-radius: 50px; margin-top: 20px"
+        outlined
+        v-model="busca"
+        append-icon="mdi-magnify"
+        placeholder="Pesquisar Carro"
+      ></v-text-field>
+      </v-col>
+    </v-row>
     <v-row>
-        <v-col sx="4" sm="6" md="4" lg="3"  v-for="(carro, id) in this.carros" :key="id" >
+        <v-col sx="4" sm="6" md="4" lg="3"  v-for="(carro, id) in buscarCarros" :key="id" >
         <v-hover>
           <template v-slot:default="{ hover }">
             <v-card class="mx-auto" max-width="344" max-height="550" color="grey lighten-4">
@@ -31,7 +42,7 @@
           </template>
         </v-hover>
           </v-col>
-          <v-dialog  v-if="dialog" v-model="dialog" max-width="600px">
+          <v-dialog  v-if="dialog" v-model="dialog" max-width="800px">
             <v-card>
               <v-card-title>
                 <h4>{{carro.marca}} - {{ carro.nome }}</h4>
@@ -46,8 +57,8 @@
               <v-card-text>
                 <v-container>
                   <v-row style="margin-top: 10px">
-                    <v-col cols="2"> </v-col>
-                    <v-col cols="8">
+                    <v-col> </v-col>
+                    <v-col cols="12">
                       <h1 class="center" style="color: black">R${{ carro.preco }}</h1>
                     </v-col>
                     <v-col cols="2"> </v-col>
@@ -69,7 +80,7 @@
                       <p class="my-1 center">{{ carro.km }}</p>
                     </v-col>
                   </v-row>
-                  <v-divider inset></v-divider>
+                  <hr>
                   <v-row>
                     <v-col>
                       <h6 class="my-1 center">Potência do motor</h6>
@@ -86,22 +97,21 @@
                       <p class="my-1 center">{{ carro.cor }}</p>
                     </v-col>
                   </v-row>
-                  <v-divider inset></v-divider>
+                  <hr>
                   <v-row>
                     <v-col>
                       <h6 class="my-1 center">Câmbio do carro</h6>
                       <p class="my-1 center">{{ carro.cambio }}</p>
                     </v-col>
-                    <v-divider vertical></v-divider>
                   </v-row>
-                  <v-divider inset></v-divider>
+                  <hr>
                   <v-row>
                     <h4 class="center" style="color: black">
                       Entre em contato com a gente ou vá até a loja, para fazer
                       o finânciamento!
                     </h4>
                   </v-row>
-                  <v-divider inset></v-divider>
+                  <hr>
                   <v-row>
                     <p class="my-1">
                       Endereço: Rua Raimundo Carneiro 123
@@ -113,16 +123,31 @@
                       Sábados | 9h00 às 15h00
                     </p>
                   </v-row>
-                  <v-divider inset></v-divider>
+                  <hr>
                   <v-row>
-                    <v-col cols="3">
+                    <v-col xs="12">
                       <p class="my-1">Contatos:</p>
                     </v-col>
-                    <v-col>
-                      <p class="my-1">Fulao (11)945824785</p>
-                      <p class="my-1">Roberto (11)40028922</p>
+                  </v-row >
+                  <v-col xs="12">
+                      <p class="my-1">Fulao: (11) 945824785 <v-btn
+                    class="mx-4 black--text"
+                    href="https://api.whatsapp.com/send/?phone=5511945290686&text=Olá+tudo+bem?&app_absent=0"
+                    icon
+                  >
+                  
+                    <v-icon size="30px">mdi-whatsapp</v-icon>
+                  </v-btn></p>
+                  </v-col>
+                  <v-col xs="12">
+                      <p class="my-1">Roberto: (11) 40028922 <v-btn
+                    class="mx-4 black--text"
+                    href="https://api.whatsapp.com/send/?phone=5511945290686&text=Olá+tudo+bem?&app_absent=0"
+                    icon
+                  >
+                    <v-icon size="30px">mdi-whatsapp</v-icon>
+                  </v-btn></p>
                     </v-col>
-                  </v-row>
                 </v-container>
               </v-card-text>
               <v-card-actions>
@@ -138,42 +163,58 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
+
   data: () => ({
     overlay: false,
     dialog: false,
-    id: null,
+    busca: '',
+    carrosFiltro: []
   }),
+
   computed:{
    ...mapGetters({
       carros: "carros",
     }),
+
+   buscarCarros() {
+      if(this.busca == '' || this.busca == ' ') {
+        return this.carros
+      } else {
+        return this.carrosFiltro.filter((carro) => {
+          return carro.nome.match(this.busca);
+        });
+      }
+      }
+
   },
 
   methods: {
-     
-      exibirCarro(){
-        this.$http('carros.json').then(res => {
-          return this.$store.state.carros = res.data
+    exibirCarro(){
+      this.$http('carros.json').then(res => {
+         this.$store.state.carros = res.data
+         this.$store.state.carrosFiltro = res.data
         })
       },
 
+    
+
     cadastrarCarro(id){
       this.id = id
-      //console.log(this.carros[this.id])
+      console.log(this.carros[this.id])
       this.carro = this.carros[id]
-     // console.log("CARRO: ", this.carro)
-      //console.log(this.id)
+      console.log("CARRO: ", this.carro)
+      console.log(this.id)
       this.dialog = true
     },
-   
-
   },
+
   created(){
     this.exibirCarro();
-
+    console.log("Filtro",this.carrosFiltro)
+    console.log("Carros", this.carros)
   }
  
 };

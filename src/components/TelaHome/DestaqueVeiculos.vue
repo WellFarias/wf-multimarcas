@@ -1,66 +1,61 @@
 <template>
-  <div style="background-color: #424242; display: flex; justify-content: space-arround">
+  <div
+    style="
+      background-color: #424242;
+      display: flex;
+      justify-content: space-arround;
+    "
+  >
     <v-container>
       <br />
-      <h1 style="text-align: center; color: white; font-weight: 300">Veículos em Destaques</h1>
+      <h1 style="text-align: center; color: white; font-weight: 300">Veja nossos veículos em estoque</h1>
       <br />
-      <div style="display: flex; margin: auto">
-      <v-row>
-        <v-col   xs="12" sm="6" md="4" lg="4">
-        <v-card  class="mx-auto" max-width="300">
-          <v-img src="/fiat-palio.jpg" height="200px"></v-img>
 
-          <v-card-title>R$ 16.000,00</v-card-title>
-
-          <v-card-subtitle>100.000km</v-card-subtitle>
-          <v-card-subtitle>Fiat Palio - 2011</v-card-subtitle>
-
-          <v-card-actions>
-            <v-btn color="green lighten-2" text>Saiba Mais</v-btn>
-            <v-spacer></v-spacer>
-          </v-card-actions>
-        </v-card>
+      <v-row justify="center">
+        <v-col xs="3" sx="4" sm="6" md="4" lg="12">
+          <v-carousel hide-delimiters>
+            <v-carousel-item
+              v-for="(carro, i) in carros"
+              :key="i"
+              :src="carro.fotos? carro.fotos[0] : ''"
+            ></v-carousel-item>
+          </v-carousel>
         </v-col>
-
-        <v-col   xs="12" sm="6" md="4" lg="4">
-        <v-card class="mx-auto" max-width="300">
-          <v-img src="/fusca.jpg" height="200px"></v-img>
-
-          <v-card-title>R$ 1.000.000,00</v-card-title>
-
-          <v-card-subtitle>0km</v-card-subtitle>
-          <v-card-subtitle>Fuscão Preto - 1900</v-card-subtitle>
-
-          <v-card-actions>
-            <v-btn color="green lighten-2" text>Saiba Mais</v-btn>
-            <v-spacer></v-spacer>
-          </v-card-actions>
-        </v-card>
-        </v-col>
-
-        <v-col xs="12" sm="6" md="4" lg="4">
-        <v-card class="mx-auto" max-width="300">
-          <v-img src="/golf.jpg" height="200px"></v-img>
-
-          <v-card-title>R$ 25.000,00</v-card-title>
-
-          <v-card-subtitle>100.000km</v-card-subtitle>
-          <v-card-subtitle>Golf sportline - 2011</v-card-subtitle>
-
-          <v-card-actions>
-            <v-btn color="green lighten-2" text>Saiba Mais</v-btn>
-            <v-spacer></v-spacer>
-          </v-card-actions>
-        </v-card>
-        </v-col>
+        <v-btn elevation="6" large x-large @click="veiculos" style="border-radius: 50px; outline: none">Saiba mais</v-btn>
       </v-row>
-      </div>
     </v-container>
   </div>
 </template>
-
 <script>
-export default {};
+import { mapGetters } from "vuex";
+
+export default {
+  data: () => ({
+    overlay: false,
+    dialog: false,
+  }),
+  computed: {
+    ...mapGetters({
+      carros: "carros",
+    }),
+  },
+
+  methods: {
+    exibirCarro() {
+      this.$http("carros.json").then((res) => {
+        return (this.$store.state.carros = res.data);
+      });
+    },
+
+     veiculos() {
+      this.$router.push("/veiculos");
+  }
+  },
+
+  created() {
+    this.exibirCarro();
+  },
+};
 </script>
 
 <style></style>

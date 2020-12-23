@@ -6,13 +6,16 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     carros: [],
+    
     carro: {
-      fotos:[]
+      fotos:[] 
     },
-    id: null,
+    id: null, 
     user: {}
   },
+
   getters: {
+
     carros(state){
       return state.carros;
     },
@@ -23,7 +26,7 @@ export default new Vuex.Store({
 
     user(state){
       return state.user
-    }
+    },
   },
 
   mutations: {
@@ -45,7 +48,7 @@ export default new Vuex.Store({
 
     setUser(state, payload){
       state.user = payload
-    }
+    },
   },
   actions: {
     salvarCarro({commit}, payload){

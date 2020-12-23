@@ -26,6 +26,10 @@ export default {
 .center {
   text-align: center;
 }
+.my-1 {
+  color: black;
+  font-size: 20px;
+}
 .margin {
   margin: auto;
 }
