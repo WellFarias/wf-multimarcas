@@ -28,7 +28,6 @@ export default {
 }
 .my-1 {
   color: black;
-  font-size: 20px;
 }
 .margin {
   margin: auto;

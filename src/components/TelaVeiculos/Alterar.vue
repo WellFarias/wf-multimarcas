@@ -2,8 +2,8 @@
   <v-app>
     <v-container fluid>
       <br />
-      <h1 style="text-align: center; color: black; font-weight: 300">Veículos cadastrados</h1>
-      <v-row align="end" justify="end">
+      <h1 style="text-align: center; color: black; font-weight: 300">Veículos Cadastrados</h1>
+      <v-row class="d-flex justify-end">
         <v-col cols="2">
           <TelaCadastro></TelaCadastro>
         </v-col>
@@ -30,7 +30,7 @@
                 </v-card-subtitle>
                 <v-fade-transition>
                   <v-overlay v-if="hover" absolute color="#000000">
-                    <v-btn elevation="10" color="secondary" @click="deleteCarro(id)">Excluir</v-btn>
+                    <v-btn elevation="10" color="secondary" @click="idCarro(id)">Excluir</v-btn>
                     <v-btn class="ml-2" color="blue" @click="alterar(id)">Editar</v-btn>
                   </v-overlay>
                 </v-fade-transition>
@@ -140,13 +140,43 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="grey" style="color: white" large>Cancelar</v-btn>
-              <v-btn color="red" style="color: white" large @click="editarCarro()">Editar</v-btn>
+              <v-btn color="grey" style="color: white"  >Cancelar</v-btn>
+              <v-btn color="red" style="color: white"  @click="editarCarro()">Editar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </v-row>
       <br />
+
+      <div class="text-center">
+    <v-bottom-sheet v-model="sheet">
+      <v-sheet
+        class="text-center"
+        height="200px"
+      >
+        <div class="py-3">
+         <p class="mt-5"> Tem certeza que deseja excluir este veículo ? </p>
+        </div>
+        <v-btn
+          class="mt-6"
+          text
+          color="blue"
+          @click="sheet = !sheet"
+        >
+          Cancelar
+        </v-btn>
+        <v-btn
+          class="mt-6"
+          text
+          color="red"
+          @click="deleteCarro(id)"
+        >
+          Excluir
+        </v-btn>
+
+      </v-sheet>
+    </v-bottom-sheet>
+  </div>
     </v-container>
   </v-app>
 </template>
@@ -162,6 +192,7 @@ export default {
       dialog: false,
       modalShow: false,
       index: -1,
+      sheet: false
     };
   },
   computed: {
@@ -175,6 +206,10 @@ export default {
   },
   methods: {
 
+    refresh() {
+      window.location.reload();
+    },
+
     alterar(index) {
       this.index = index;
       console.log(this.carros[this.index]);
@@ -185,7 +220,9 @@ export default {
     },
 
     deleteCarro(id) {
-      this.$http.delete(`/carros/${id}.json`).then();
+      this.$http.delete(`/carros/${id}.json`).then(() => {
+        this.refresh();
+      });
       console.log("carro removido"); 
     },
 
@@ -206,7 +243,15 @@ export default {
 
      return this.$firebase.database().ref().update(updates)
      
-    }
+    },
+    idCarro(id){
+      this.id = id
+      console.log(this.carros[this.id])
+      this.carro = this.carros[id]
+      console.log("CARRO: ", this.carro)
+      console.log(this.id)
+      this.sheet = true 
+    },
 },
 
   created() {
