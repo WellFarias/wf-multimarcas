@@ -1,13 +1,11 @@
 <template>
 <v-app>
-  <v-main>
     <router-view name="Home" />
     <router-view name="AppBar" />
     <router-view name="Veiculos" />
     <router-view name="Alterar" />
     <router-view name="Footer" />
     <router-view />
-  </v-main>
 </v-app>
 </template>
 
@@ -28,6 +26,7 @@ export default {
 }
 .my-1 {
   color: black;
+  font-size: 100%;
 }
 .margin {
   margin: auto;

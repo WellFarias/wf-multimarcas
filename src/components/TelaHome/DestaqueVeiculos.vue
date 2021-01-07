@@ -12,8 +12,8 @@
       <br />
 
       <v-row justify="center">
-        <v-col xs="3" sx="4" sm="6" md="4" lg="12">
-          <v-carousel hide-delimiters>
+        <v-col xs="12" sm="12" md="12" lg="12">
+          <v-carousel :height="height" hide-delimiters>
             <v-carousel-item
               v-for="(carro, i) in carros"
               :key="i"
@@ -21,7 +21,7 @@
             ></v-carousel-item>
           </v-carousel>
         </v-col>
-        <v-btn elevation="6" large x-large @click="veiculos" style="border-radius: 50px; outline: none">Saiba mais</v-btn>
+        <v-btn :button="button" elevation="6" x-large @click="veiculos" style="border-radius: 50px; outline: none">Saiba mais</v-btn>
       </v-row>
     </v-container>
   </div>
@@ -38,6 +38,26 @@ export default {
     ...mapGetters({
       carros: "carros",
     }),
+     height (height) {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 250
+          case 'sm': return 400
+          case 'md': return 500
+          case 'lg': return 700
+          case 'xl': return 800
+        }
+        return height
+      },
+      button (button) {
+        switch (this.$vuetify.breakpoint.button) {
+          case 'xs': return 10
+          case 'sm': return 400
+          case 'md': return 500
+          case 'lg': return 700
+          case 'xl': return 800
+        }
+        return button
+      },
   },
 
   methods: {

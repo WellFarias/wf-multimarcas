@@ -1,6 +1,7 @@
 <template>
   <v-app-bar
-    style="height: 70px"
+  width="100%"
+    style="height: 60px"
     color="#000000"
     :hide-on-scroll="$vuetify.breakpoint.smAndDown"
     v-scroll="onScroll"
@@ -8,7 +9,7 @@
     dark
     elevate-on-scroll
   >
-      <img src="/wf-logo.png" alt="" style="width: 200px" />
+      <img src="/wf-logo.png" alt="wf-multimarcas"  :width="width"/>
       <v-spacer></v-spacer>
         <v-btn
           @click="home"
@@ -31,6 +32,18 @@ export default {
   data: () => ({
     isScrolling: false,    
   }),
+  computed: {
+      width (width) {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 120
+          case 'sm': return 170
+          case 'md': return 200
+          case 'lg': return 160
+          case 'xl': return 210
+        }
+        return width
+      },
+  },
 
   methods: {
     veiculos() {

@@ -39,8 +39,8 @@
                 hint="Ex: 2005, 2006, 2007 e etc"
                 outlined
               ></v-text-field>
-
-              <hr />
+              <v-divider></v-divider>
+              <br>
               <h5>Número de portas</h5>
               <v-radio-group v-model="carro.porta" row :rules="inputRules">
                 <v-col cols="2">
@@ -55,7 +55,7 @@
                   <v-radio label="4" color="red" value="4"></v-radio>
                 </v-col>
               </v-radio-group>
-              <hr />
+              <v-divider></v-divider>
               <br />
               <v-text-field
                 :rules="inputRules"
@@ -64,8 +64,8 @@
                 hint="Ex: 1000, 2000, 100000 e etc"
                 outlined
               ></v-text-field>
-
-              <hr />
+              <v-divider></v-divider>
+              <br>
               <h5>Tipo de combustivel</h5>
               <v-radio-group v-model="carro.combustivel" row :rules="inputRules">
                 <v-col cols="2">
@@ -84,7 +84,7 @@
                   <v-radio label="Flex" color="red" value="flex"></v-radio>
                 </v-col>
               </v-radio-group>
-              <hr />
+              <v-divider></v-divider>
               <br />
 
               <v-text-field
@@ -94,8 +94,8 @@
                 hint="Ex: branco, azul, vermelho e etc"
                 outlined
               ></v-text-field>
-
-              <hr />
+              <v-divider></v-divider>
+              <br>
               <h5>Câmbio do carro</h5>
               <v-radio-group v-model="carro.cambio" row :rules="inputRules">
                 <v-col cols="2">
@@ -114,7 +114,7 @@
                   <v-radio label="CVT" color="red" value="cvt"></v-radio>
                 </v-col>
               </v-radio-group>
-              <hr />
+              <v-divider></v-divider>
               <br />
 
               <v-text-field

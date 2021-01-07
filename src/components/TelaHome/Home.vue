@@ -1,5 +1,5 @@
  <template>
-  <v-main style="padding: 0px">
+ <v-container fluid class="pa-0">
     <v-parallax style="height: 750px" src="/highway.jpg">
       <div>
         <h1 class="center" style="font-weight: 300">WF Multimarcas</h1>
@@ -9,7 +9,7 @@
     </v-parallax>
     <DestaqueVeiculo />
     <QuemSomosNos />
-  </v-main>
+ </v-container>
 </template>
 
 <script>

@@ -3,7 +3,7 @@
     <v-row align="center" justify="center">
       <v-col xs="12" sm="6" md="6" lg="6">
         <v-text-field
-          style="border-radius: 50px; margin-top: 20px"
+          style="border-radius: 50px; margin-top: 60px"
           outlined
           @keypress="buscarCarros($event)"
           v-model="busca"
@@ -76,7 +76,7 @@
                   <p class="my-1 center">{{ carro.km }}</p>
                 </v-col>
               </v-row>
-              <hr />
+              <v-divider></v-divider>
               <v-row>
                 <v-col>
                   <h3 class="my-1 center">Potência do motor</h3>
@@ -185,6 +185,16 @@ export default {
           case 'xl': return 800
         }
         return height
+      },
+       card (card) {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 250
+          case 'sm': return 400
+          case 'md': return 500
+          case 'lg': return 600
+          case 'xl': return 800
+        }
+        return card
       },
 
   },
