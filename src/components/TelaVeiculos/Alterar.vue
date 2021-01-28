@@ -27,7 +27,7 @@
               color="grey lighten-4"
             >
               <v-img
-                :src="carro.fotos ? carro.fotos[0] : ''"
+                :src="carro.fotoPrincipal ? carro.fotoPrincipal[0] : ''"
                 height="300px"
               ></v-img>
 
@@ -61,6 +61,7 @@
     <v-row justify="center">
       <v-dialog
         persistent
+        fullscreen
         v-if="dialogAlteracao"
         v-model="dialogAlteracao"
         max-width="600px"
@@ -71,17 +72,17 @@
             <h4 style="color:white; font-weight:400">Editar veículo</h4>
           </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items>
-            <v-btn icon style="font-size: 100%; color:white" @click="dialogAlteracao = false, alertAlteracao = false" >X</v-btn>
-            </v-toolbar-items>
+             <v-btn
+            icon
+            dark
+            @click="dialogAlteracao = false"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
           </v-toolbar>
-          <hr />
-          <v-alert
-            v-if="alertAlteracao"
-            v-model="alertAlteracao"
-            color="blue"
-            type="info"
-          >Alteração concluída</v-alert>
+          <v-carousel class="mt-4" style="width:1300px; margin: auto" :height="height" hide-delimiters>
+            <v-carousel-item v-for="(foto, i) in carro.fotos" :key="i" :src="foto"></v-carousel-item>
+          </v-carousel>
           <v-card-text class="pa-0">
             <v-container>
               <v-row>
@@ -168,6 +169,8 @@
                 </v-col>
               </v-row>
                   <v-divider></v-divider>
+                  <v-textarea class="mt-4" name="input-7-4" label="Observações" v-model="carros[index].descricao"></v-textarea>
+
             </v-container>
           </v-card-text>
           <v-card-actions>
@@ -255,6 +258,8 @@ export default {
 
       updates = {};
       updates[`carros/${this.index}/nome`] = this.carro.nome;
+      updates[`carros/${this.index}/ano`] = this.carro.ano;
+      updates[`carros/${this.index}/descricao`] = this.carro.descricao;
       updates[`carros/${this.index}/marca`] = this.carro.marca;
       updates[`carros/${this.index}/porta`] = this.carro.porta;
       updates[`carros/${this.index}/km`] = this.carro.km;
@@ -266,7 +271,8 @@ export default {
 
       this.alertAlteracao = true;
 
-      return this.$firebase.database().ref().update(updates);
+      return this.$firebase.database().ref().update(updates)
+
     },
     idCarro(id) {
       this.id = id;
