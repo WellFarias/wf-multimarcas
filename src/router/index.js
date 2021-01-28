@@ -6,6 +6,7 @@ import Veiculos from '../components/TelaVeiculos/Veiculos'
 import Footer from '../components/Footer'
 import SignUp from '../components/TelaLogin/SignUp'
 import Alterar from '../components/TelaVeiculos/Alterar'
+import Firebase from '../plugins/firebase'
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,7 @@ const routes = [
   },
   {
     path: '/login',
+    name: 'login',
     component: SignUp
   },
   {
@@ -47,5 +49,21 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
+router.beforeEach((to, from, next) => {
+    if(to.name == 'lista-carros'){
+      Firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          next()
+        } else {
+          next('login')
+        }
+      });
+    }else{
+      next()
+    }
+})
+
 
 export default router

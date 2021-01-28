@@ -291,7 +291,6 @@ export default {
       }, 2000);
     },
 
-    // imagem principal
 
  uploadImagePrincipal() {
       this.loadingFotoPrincipal = true;
