@@ -8,7 +8,8 @@ export default new Vuex.Store({
     carros: [],
     
     carro: {
-      fotos:[] 
+      fotos:[], 
+      fotoPrincipal: []
     },
     id: null, 
     user: {}
@@ -44,6 +45,10 @@ export default new Vuex.Store({
     },
     addFotos(state, payload){
       state.carro.fotos.push(payload)
+    },
+
+    addFotoPrincipal(state, payload) {
+      state.carro.fotoPrincipal.push(payload)
     },
 
     setUser(state, payload){

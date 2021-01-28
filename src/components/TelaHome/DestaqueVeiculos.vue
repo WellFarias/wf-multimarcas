@@ -17,7 +17,7 @@
             <v-carousel-item
               v-for="(carro, i) in carros"
               :key="i"
-              :src="carro.fotos? carro.fotos[0] : ''"
+              :src="carro.fotoPrincipal? carro.fotoPrincipal[0] : ''"
             ></v-carousel-item>
           </v-carousel>
         </v-col>

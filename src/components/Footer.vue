@@ -1,26 +1,20 @@
 <template>
   <v-footer dark color="black">
     <v-card flat tile class="black white--text text-center" style="width: 100%">
-      <v-card-text>
-        <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
-          <v-icon size="24px">{{ icon }}</v-icon>
-        </v-btn>
-      </v-card-text>
-
-      <v-card-text class="white--text pt-0">
+      <v-card-text class="white--text mt-7 pt-0">
         <v-row>
           <v-col cols="12" sm="4" lg="4" >
             <p>
               <strong>Contatos</strong>
             </p>
             <p>
-              Beethoven: 123456789<v-btn class="mx-4 white--text" href="https://api.whatsapp.com/send/?phone=5511945290686&text=Olá+tudo+bem?&app_absent=0" icon>
+              Eduardo: (11) 98961-5120<v-btn class="mx-4 white--text" href="https://api.whatsapp.com/send/?phone=5511989615120&text=Olá+tudo+bem?&app_absent=0" icon>
                 <v-icon size="24px">mdi-whatsapp</v-icon>
               </v-btn>
             </p>
             <p>
-              Roberto: 123456789
-              <v-btn class="mx-4 white--text" href="https://api.whatsapp.com/send/?phone=5511945290686&text=Olá+tudo+bem?&app_absent=0" icon>
+              Edmundo: (11) 94706-3029
+              <v-btn class="mx-4 white--text" href="https://api.whatsapp.com/send/?phone=5511947063029&text=Olá+tudo+bem?&app_absent=0" icon>
                 <v-icon size="24px">mdi-whatsapp</v-icon>
               </v-btn>
             </p>
@@ -38,7 +32,7 @@
               <strong>Funcionamento</strong>
             </p>
             <p>Segunda à Sexta | 8h00 às 18h00</p>
-            <p>Sábados | 8h30 às 16h00</p>
+            <p>Sábados | 8h00 às 14h00</p>
             <p>Domingos | Fechado</p>
           </v-col>
         </v-row>
@@ -55,9 +49,7 @@
 
 <script>
 export default {
-  data: () => ({
-    icons: ["mdi-facebook", "mdi-instagram"],
-  }),
+  
 };
 </script>
 
