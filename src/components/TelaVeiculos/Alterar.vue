@@ -86,60 +86,62 @@
           <v-card-text class="pa-0">
             <v-container>
               <v-row>
-                <v-col cols="2"></v-col>
-                <v-col>
-                  <h4 class="my-1">Nome</h4>
+                <v-col cols="6">
+                   <h6 class="my-1">Marca</h6>
                   <p class="my-1 center">
-                    <v-text-field v-model="carros[index].nome"></v-text-field>
+                    <v-text-field outlined dense v-model="carros[index].marca"></v-text-field>
                   </p>
                 </v-col>
-
-                <v-col cols="2"></v-col>
+                <v-col cols="6">
+                  <h4 class="my-1">Nome</h4>
+                  <p class="my-1 center">
+                    <v-text-field outlined dense v-model="carros[index].nome"></v-text-field>
+                  </p>
+                </v-col>
               </v-row>
               <v-divider></v-divider>
               <v-row>
                 <v-col cols="4">
                   <h6 class="my-1">Preço</h6>
                   <p class="my-1 center">
-                    <v-text-field width="2" v-model="carros[index].preco"></v-text-field>
+                    <v-text-field outlined dense v-model="carros[index].preco"></v-text-field>
                   </p>
                 </v-col>
                 <v-divider vertical></v-divider>
                 <v-col cols="4">
-                  <h6 class="my-1">Marca</h6>
+                  <h6 class="my-1">Final da Placa</h6>
                   <p class="my-1 center">
-                    <v-text-field v-model="carros[index].marca"></v-text-field>
+                    <v-text-field outlined dense v-model="carros[index].finalPlaca"></v-text-field>
                   </p>
                 </v-col>
                 <v-divider vertical></v-divider>
                 <v-col>
                   <h6 class="my-1">Câmbio do carro</h6>
                   <p class="my-1 center">
-                    <v-text-field v-model="carros[index].cambio"></v-text-field>
+                    <v-text-field outlined dense  v-model="carros[index].cambio"></v-text-field>
                   </p>
                 </v-col>
-                <v-divider vertical></v-divider>
               </v-row>
               <v-divider></v-divider>
               <v-row>
                 <v-col>
                   <h6 class="my-1">Ano</h6>
                   <p class="my-1 center">
-                    <v-text-field v-model="carros[index].ano"></v-text-field>
+                    <v-text-field outlined dense v-model="carros[index].ano"></v-text-field>
                   </p>
                 </v-col>
                 <v-divider vertical></v-divider>
                 <v-col>
                   <h6 class="my-1">Portas</h6>
                   <p class="my-1 center">
-                    <v-text-field v-model="carros[index].porta"></v-text-field>
+                    <v-text-field outlined dense v-model="carros[index].porta"></v-text-field>
                   </p>
                 </v-col>
                 <v-divider vertical></v-divider>
                 <v-col>
                   <h6 class="my-1">Km</h6>
                   <p class="my-1 center">
-                    <v-text-field v-model="carros[index].km"></v-text-field>
+                    <v-text-field outlined dense v-model="carros[index].km"></v-text-field>
                   </p>
                 </v-col>
               </v-row>
@@ -148,28 +150,26 @@
                 <v-col>
                   <h6 class="my-1">Potência do motor</h6>
                   <p class="my-1 center">
-                    <v-text-field v-model="carros[index].motor"></v-text-field>
+                    <v-text-field outlined dense v-model="carros[index].motor"></v-text-field>
                   </p>
                 </v-col>
                 <v-divider vertical></v-divider>
                 <v-col>
                   <h6 class="my-1">Combustivel</h6>
                   <p class="my-1 center">
-                    <v-text-field
-                      v-model="carros[index].combustivel"
-                    ></v-text-field>
+                    <v-text-field outlined dense v-model="carros[index].combustivel"></v-text-field>
                   </p>
                 </v-col>
                 <v-divider vertical></v-divider>
                 <v-col>
                   <h6 class="my-1">Cor</h6>
                   <p class="my-1 center">
-                    <v-text-field v-model="carros[index].cor"></v-text-field>
+                    <v-text-field outlined dense v-model="carros[index].cor"></v-text-field>
                   </p>
                 </v-col>
               </v-row>
                   <v-divider></v-divider>
-                  <v-textarea class="mt-4" name="input-7-4" label="Observações" v-model="carros[index].descricao"></v-textarea>
+                  <v-textarea outlined class="mt-4" name="input-7-4" label="Observações" v-model="carros[index].descricao"></v-textarea>
 
             </v-container>
           </v-card-text>
@@ -239,10 +239,7 @@ export default {
 
     alterar(index) {
       this.index = index;
-      console.log(this.carros[this.index]);
       this.carro = this.carros[index];
-      console.log("CARRO: ", this.carro);
-      console.log(this.index);
       this.dialogAlteracao = true;
     },
 
@@ -250,7 +247,6 @@ export default {
       this.$http.delete(`/carros/${id}.json`).then(() => {
         this.refresh();
       });
-      console.log("carro removido");
     },
 
     editarCarro(updates) {
@@ -276,10 +272,7 @@ export default {
     },
     idCarro(id) {
       this.id = id;
-      console.log(this.carros[this.id]);
       this.carro = this.carros[id];
-      console.log("CARRO: ", this.carro);
-      console.log(this.id);
       this.sheet = true;
     },
   },

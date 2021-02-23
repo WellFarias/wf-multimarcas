@@ -36,7 +36,7 @@
                 label="Ano/Modelo"
                 hint="Ex: 2005, 2006, 2007 e etc"
                 outlined
-              ></v-text-field>
+              ></v-text-field>carros
               <v-divider></v-divider>
               <br />
               <h5>Número de portas</h5>
@@ -324,12 +324,6 @@ export default {
  // fim
 
   },
-  created() {
-    console.log(" O CARRO ", this.$store.state.carro);
-  },
-  mounted() {
-    console.log(this.$firebase);
-  }
 };
 </script>
 
