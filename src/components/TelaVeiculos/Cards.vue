@@ -55,11 +55,14 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
           </v-toolbar>
-          <v-carousel class="mt-4" style="width:1300px; margin: auto" :height="height" hide-delimiters>
-            <v-carousel-item v-for="(foto, i) in carro.fotos" :key="i" :src="foto"></v-carousel-item>
-          </v-carousel>
+
           <v-card-text class="pa-0">
             <v-container>
+              <v-row>
+                <v-carousel class="ma-10" style="width:1300px; margin: auto" :height="height"  hide-delimiters>
+                  <v-carousel-item v-for="(foto, i) in carro.fotos" :key="i" :src="foto"></v-carousel-item>
+                </v-carousel>
+              </v-row>
               <v-row style="margin-top: 10px">
                 <v-col></v-col>
                 <v-col cols="12">

@@ -182,7 +182,7 @@
               >Cancelar</v-btn
             >
             <v-btn color="red" style="color: white" @click="editarCarro()"
-              >Editar</v-btn
+              >Salvar Edição</v-btn
             >
           </v-card-actions>
         </v-card>
@@ -245,7 +245,18 @@ export default {
 
     deleteCarro(id) {
       this.$http.delete(`/carros/${id}.json`).then(() => {
+        // var desertRef = this.$firebase.storageRef.child(car.imagemPrincipal);
+        // desertRef.delete().then(function() {
+        //  console.log("arquivo deletado com sucesso.")
+        // }).catch(function(error) {
+        //   console.log("erro ao deletar arquivo: ", error)
+        // });
+        //
+        // for(let img = 0; img < car.images.length; i++){
+        //   const url = car.images[img]
+        //   var desertRef = this.$firebase.storageRef.child(car.imagemPrincipal);
         this.refresh();
+
       });
     },
 
@@ -267,8 +278,9 @@ export default {
 
       this.alertAlteracao = true;
 
-      return this.$firebase.database().ref().update(updates)
+      this.$firebase.database().ref().update(updates)
 
+      this.dialogAlteracao = false
     },
     idCarro(id) {
       this.id = id;
