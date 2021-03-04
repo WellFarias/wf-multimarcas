@@ -16,7 +16,8 @@ export default {
       carros: 'carros'
     }),
 
-  }
+  },
+
 };
 </script>
 

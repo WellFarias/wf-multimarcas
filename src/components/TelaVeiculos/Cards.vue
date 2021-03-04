@@ -19,16 +19,24 @@
           <template v-slot:default="{ hover }">
             <v-card class="mx-auto" max-width="344" max-height="550" color="grey lighten-4">
               <v-img :src="carro.fotoPrincipal? carro.fotoPrincipal[0] : ''" height="300px"></v-img>
-              <v-card-title>{{carro.marca}} - {{carro.nome}}</v-card-title>
-              <v-card-subtitle style="margin-top: 3px">
-                <h4>
-                  <strong>R$ {{carro.preco}}</strong>
-                </h4>
-                <p>Motor: {{carro.motor}}</p>
-                <p>Ano: {{carro.ano}}</p>
-                <p>Câmbio: {{carro.cambio}}</p>
-                <p>{{carro.km}} Km</p>
+              <v-card-subtitle>
+                  <h3 style="text-align: center">
+                    <strong style="color: black">R$ {{carro.preco}}</strong>
+                  </h3>
               </v-card-subtitle>
+              <v-card-title style="text-align: center;"> <span >{{carro.marca}} - {{carro.nome}}</span></v-card-title>
+
+              <v-card-text>
+                <v-row class="mt-0">
+                  <p>
+                    <b>Potência do motor:</b> {{ carro.motor }} <br>
+                    <b>Combustível: </b>{{ carro.combustivel }} <br>
+                    <b>Cor: </b> {{ carro.cor }} <br>
+                    <b>Final da Placa: </b>{{ carro.finalPlaca }} <br>
+                    <b>Câmbio do carro: </b>{{ carro.cambio }} <br>
+                  </p>
+                </v-row>
+              </v-card-text>
               <v-fade-transition>
                 <v-overlay v-if="hover" absolute color="#000000">
                   <v-btn
@@ -123,6 +131,18 @@
                 <h1 class="my-1">Observação</h1>
                 <p class="my-1">{{carro.descricao}}</p>
                 </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <h1 class="my-1">Opcionais</h1>
+                  <p class="my-1">
+                    <span v-for="(op, index) in carro.opcionais" :key="index">
+                      {{op}}
+                      <span v-if="index < carro.opcionais.length -1 ">,</span>
+                    </span>
+                  </p>
+                </v-col>
+
               </v-row>
               <v-divider></v-divider>
               <v-row justify="center">
@@ -255,7 +275,6 @@ export default {
 
   created() {
     this.exibirCarro();
-    console.log("Carros", this.$store.state.carros);
   }
 };
 

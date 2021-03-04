@@ -1,7 +1,7 @@
 <template>
   <v-main>
-    <v-container >
-      <v-row align="end" justify="end">
+    <v-container>
+      <v-row align="end" justify="end" >
         <v-col class="mr-16">
           <v-btn color="secondary" dark v-bind="attrs" @click="dialog = true">+ Cadastrar Veiculo</v-btn>
         </v-col>
@@ -15,8 +15,7 @@
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </v-toolbar>
-
-          <v-row justify="center">
+          <v-card-text>
             <v-form style="width: 1000px" v-model="status" >
               <v-row>
                 <v-col cols="6">
@@ -38,44 +37,44 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
-             <v-row>
-               <v-col cols="6">
-                 <v-text-field
-                     :rules="inputRules"
-                     v-model="carro.ano"
-                     label="Ano/Modelo"
-                     hint="Ex: 2005, 2006, 2007 e etc"
-                     outlined
-                 ></v-text-field>
-               </v-col>
-               <v-col>
-                 <v-text-field
-                     :rules="inputRules"
-                     v-model="carro.finalPlaca"
-                     label="Final da Placa"
-                     outlined
-                 ></v-text-field>
-               </v-col>
-             </v-row>
+              <v-row>
+                <v-col cols="6">
+                  <v-text-field
+                      :rules="inputRules"
+                      v-model="carro.ano"
+                      label="Ano/Modelo"
+                      hint="Ex: 2005, 2006, 2007 e etc"
+                      outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                      :rules="inputRules"
+                      v-model="carro.finalPlaca"
+                      label="Final da Placa"
+                      outlined
+                  ></v-text-field>
+                </v-col>
+              </v-row>
               <v-divider></v-divider>
-             <v-row align="center" justify="center">
-               <v-col cols="12" align-self="center">
-                 <h5>Número de portas</h5>
-                 <v-radio-group v-model="carro.porta" row :rules="inputRules">
-                   <v-col cols="2">
-                     <v-radio label="2" color="red" value="2"></v-radio>
-                   </v-col>
-                   <v-divider vertical></v-divider>
-                   <v-col cols="2">
-                     <v-radio label="3" color="red" value="3"></v-radio>
-                   </v-col>
-                   <v-divider vertical></v-divider>
-                   <v-col cols="2">
-                     <v-radio label="4" color="red" value="4"></v-radio>
-                   </v-col>
-                 </v-radio-group>
-               </v-col>
-             </v-row>
+              <v-row align="center" justify="center">
+                <v-col cols="12" align-self="center">
+                  <h5>Número de portas</h5>
+                  <v-radio-group v-model="carro.porta" row :rules="inputRules">
+                    <v-col cols="2">
+                      <v-radio label="2" color="red" value="2"></v-radio>
+                    </v-col>
+                    <v-divider vertical></v-divider>
+                    <v-col cols="2">
+                      <v-radio label="3" color="red" value="3"></v-radio>
+                    </v-col>
+                    <v-divider vertical></v-divider>
+                    <v-col cols="2">
+                      <v-radio label="4" color="red" value="4"></v-radio>
+                    </v-col>
+                  </v-radio-group>
+                </v-col>
+              </v-row>
               <v-row>
                 <v-col>
                   <v-text-field
@@ -106,7 +105,7 @@
 
                 </v-col>
               </v-row>
-                <v-divider></v-divider>
+              <v-divider></v-divider>
               <v-col cols="12">
                 <br />
                 <h5>Tipo de combustivel</h5>
@@ -160,6 +159,11 @@
                     outlined
                     prefix="R$"
                 ></v-text-field>
+                <v-row>
+                  <v-col cols="12">
+                    <v-autocomplete :items="opcionais" label="opcionais" outlined multiple v-model="carro.opcionais"></v-autocomplete>
+                  </v-col>
+                </v-row>
                 <v-textarea outlined name="input-7-4" label="Observações" v-model="carro.descricao"></v-textarea>
                 <v-row>
                   <v-col>
@@ -195,13 +199,14 @@
                 <v-card-actions>
                   <v-row align="center" justify="center" class="ml-1 mr-1">
                     <v-col cols="8" align-self="center" >
-                      <v-btn color="red darken-1" dark :disabled="!status" block height="50" @click="salvarCarro">Cadastrar</v-btn>
+                      <v-btn color="red darken-1" dark :disabled="!status && !statusImagemPrincipal && !statusImagens" block height="50" @click="salvarCarro">Cadastrar</v-btn>
                     </v-col>
                   </v-row>
                 </v-card-actions>
               </v-col>
             </v-form>
-          </v-row>
+          </v-card-text>
+
         </v-card>
       </v-dialog>
 
@@ -223,6 +228,44 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
+      opcionais: [
+        "Air bag",
+        "Ar condicionado",
+        "Cd player",
+        "Rodas de liga leve",
+        "Vidros Elétricos",
+        "Alarme",
+        "Câmbio automático",
+        "Direção hidraúlica",
+        "Direção elétrica",
+        "Teto Solar",
+        "Trava elétrica",
+        "Freios abs",
+        "4X4",
+        "Ar digital",
+        "Banco do motorista com ajuste de altura",
+        "Bancos dianteiros com aquecimento",
+        "Capota marítima",
+        "Controle de tração",
+        "Dvd",
+        "Estribo",
+        "Farol xenônio",
+        "Limpador traseiro",
+        "Painel digital",
+        "Sensor de chuva",
+        "Air bag duplo",
+        "Ar quente",
+        "Bancos de couro",
+        "Bluetooth",
+        "Computador de bordo",
+        "Desembaçador traseiro",
+        "Encosto de cabeça traseiro",
+        "Farol de neblina",
+        "GPS",
+        "Mp3 player",
+        "Protetor de caçamba",
+        "Sensor de estacionamento"
+      ],
       message: "",
       snackbar: false,
       status: false,
@@ -236,6 +279,8 @@ export default {
       key: null,
       loading: false,
       loadingFotoPrincipal: false,
+      statusImagemPrincipal: false,
+      statusImagens: false,
       // dinheiro: 0,
       valid: false,
       inputRules: [v => !!v || "Campo obrigatório"],
@@ -279,7 +324,7 @@ export default {
     salvarCarro() {
       this.$http.post("/carros.json", this.$store.state.carro).then(() => {
         this.snackbar = true
-        this.message = "Cadastro realizado com sucesso1"
+        this.message = "Cadastro realizado com sucesso!"
         this.refresh();
       });
     },
@@ -316,6 +361,7 @@ export default {
               this.$store.commit("addFotos", url);
               this.message = "Imagens salvas com sucesso"
               this.snackbar = true
+              this.statusImagens = true
             });
             console.log(this.uploadImages);
           }
@@ -348,6 +394,7 @@ export default {
               this.$store.commit("addFotoPrincipal", url);
               this.message = "Imagem principal salva com sucesso"
               this.snackbar = true
+              this.statusImagemPrincipal = true
             });
             console.log(this.uploadImages);
           }
