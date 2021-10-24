@@ -8,11 +8,6 @@
               <strong>Contatos</strong>
             </p>
             <p>
-              Eduardo: (11) 98961-5120<v-btn class="mx-4 white--text" href="https://api.whatsapp.com/send/?phone=5511989615120&text=Olá+tudo+bem?&app_absent=0" icon>
-                <v-icon size="24px">mdi-whatsapp</v-icon>
-              </v-btn>
-            </p>
-            <p>
               Edmundo: (11) 94706-3029
               <v-btn class="mx-4 white--text" href="https://api.whatsapp.com/send/?phone=5511947063029&text=Olá+tudo+bem?&app_absent=0" icon>
                 <v-icon size="24px">mdi-whatsapp</v-icon>
